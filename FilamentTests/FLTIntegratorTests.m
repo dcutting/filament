@@ -6,49 +6,59 @@
 
 #import "FLTIntegration.h"
 
-static NSTimeInterval AsyncTimeout = 5.0f;
+static NSTimeInterval AsyncTimeout = 1.0f;
 
 @interface FLTIntegratorTests : XCTestCase
+
+@property (nonatomic, strong) FLTIntegrator *integrator;
+
+@property (nonatomic, strong) TRVSMonitor *monitor;
+@property (nonatomic, assign) BOOL didComplete;
 
 @end
 
 @implementation FLTIntegratorTests
 
+- (void)setUp {
+    
+    self.integrator = [FLTIntegrator new];
+    
+    self.monitor = [TRVSMonitor monitor];
+    self.didComplete = NO;
+}
+
 - (void)testIntegrateConfiguration_callsCompletionHandler {
     
-    FLTIntegrator *integrator = [FLTIntegrator new];
-    
-    __block BOOL didComplete = NO;
-    TRVSMonitor *monitor = [TRVSMonitor monitor];
-
-    [integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
+    [self.integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
         
-        didComplete = YES;
-        [monitor signal];
+        [self signalCompletion];
     }];
     
-    [monitor waitWithTimeout:AsyncTimeout];
-    
-    XCTAssertTrue(didComplete, @"");
+    [self assertCompletion];
 }
 
 - (void)testIntegrateConfiguration_nilConfiguration_nilResult {
     
-    FLTIntegrator *integrator = [FLTIntegrator new];
-    
-    TRVSMonitor *monitor = [TRVSMonitor monitor];
-    __block BOOL didComplete = NO;
-
-    [integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
+    [self.integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
         
         XCTAssertNil(report, @"");
-        didComplete = YES;
-        [monitor signal];
+
+        [self signalCompletion];
     }];
 
-    [monitor waitWithTimeout:AsyncTimeout];
+    [self assertCompletion];
+}
 
-    XCTAssertTrue(didComplete, @"");
+- (void)signalCompletion {
+    
+    self.didComplete = YES;
+    [self.monitor signal];
+}
+
+- (void)assertCompletion {
+    
+    [self.monitor waitWithTimeout:AsyncTimeout];
+    XCTAssertTrue(self.didComplete, @"");
 }
 
 @end
