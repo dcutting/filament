@@ -6,6 +6,8 @@
 
 #import "FLTIntegration.h"
 
+static NSTimeInterval AsyncTimeout = 5.0f;
+
 @interface FLTIntegratorTests : XCTestCase
 
 @end
@@ -25,8 +27,27 @@
         [monitor signal];
     }];
     
-    [monitor waitWithTimeout:5.0f];
+    [monitor waitWithTimeout:AsyncTimeout];
     
+    XCTAssertTrue(didComplete, @"");
+}
+
+- (void)testIntegrateConfiguration_nilConfiguration_nilResult {
+    
+    FLTIntegrator *integrator = [FLTIntegrator new];
+    
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+    __block BOOL didComplete = NO;
+
+    [integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
+        
+        XCTAssertNil(report, @"");
+        didComplete = YES;
+        [monitor signal];
+    }];
+
+    [monitor waitWithTimeout:AsyncTimeout];
+
     XCTAssertTrue(didComplete, @"");
 }
 
