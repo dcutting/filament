@@ -1,512 +1,1292 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		C85E8DFA189435CA00C4C48F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C85E8DF9189435CA00C4C48F /* Cocoa.framework */; };
-		C85E8E04189435CA00C4C48F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C85E8E02189435CA00C4C48F /* InfoPlist.strings */; };
-		C85E8E06189435CA00C4C48F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E05189435CA00C4C48F /* main.m */; };
-		C85E8E0A189435CA00C4C48F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C85E8E08189435CA00C4C48F /* Credits.rtf */; };
-		C85E8E0D189435CA00C4C48F /* FLTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E0C189435CA00C4C48F /* FLTAppDelegate.m */; };
-		C85E8E10189435CA00C4C48F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C85E8E0E189435CA00C4C48F /* MainMenu.xib */; };
-		C85E8E12189435CA00C4C48F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C85E8E11189435CA00C4C48F /* Images.xcassets */; };
-		C85E8E19189435CA00C4C48F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C85E8E18189435CA00C4C48F /* XCTest.framework */; };
-		C85E8E1A189435CA00C4C48F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C85E8DF9189435CA00C4C48F /* Cocoa.framework */; };
-		C85E8E22189435CA00C4C48F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C85E8E20189435CA00C4C48F /* InfoPlist.strings */; };
-		C85E8E2F1894397000C4C48F /* FLTIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E2E1894397000C4C48F /* FLTIntegrationTests.m */; };
-		C85E8E32189439D400C4C48F /* FLTIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E31189439D400C4C48F /* FLTIntegration.m */; };
-		C85E8E351894406C00C4C48F /* FLTRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E341894406C00C4C48F /* FLTRepository.m */; };
-		C85E8E381894411400C4C48F /* FLTIntegrator.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E371894411400C4C48F /* FLTIntegrator.m */; };
-		C85E8E3B1894419200C4C48F /* FLTIntegratorConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E3A1894419200C4C48F /* FLTIntegratorConfiguration.m */; };
-		C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E3D1894425D00C4C48F /* FLTIntegrationReport.m */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C85E8E1B189435CA00C4C48F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C85E8DEE189435CA00C4C48F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C85E8DF5189435CA00C4C48F;
-			remoteInfo = Filament;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXFileReference section */
-		C85E8DF6189435CA00C4C48F /* Filament.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filament.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C85E8DF9189435CA00C4C48F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		C85E8DFC189435CA00C4C48F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		C85E8DFD189435CA00C4C48F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		C85E8DFE189435CA00C4C48F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C85E8E01189435CA00C4C48F /* Filament-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Filament-Info.plist"; sourceTree = "<group>"; };
-		C85E8E03189435CA00C4C48F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C85E8E05189435CA00C4C48F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C85E8E07189435CA00C4C48F /* Filament-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Filament-Prefix.pch"; sourceTree = "<group>"; };
-		C85E8E09189435CA00C4C48F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		C85E8E0B189435CA00C4C48F /* FLTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLTAppDelegate.h; sourceTree = "<group>"; };
-		C85E8E0C189435CA00C4C48F /* FLTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLTAppDelegate.m; sourceTree = "<group>"; };
-		C85E8E0F189435CA00C4C48F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		C85E8E11189435CA00C4C48F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C85E8E17189435CA00C4C48F /* FilamentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FilamentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C85E8E18189435CA00C4C48F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C85E8E1F189435CA00C4C48F /* FilamentTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FilamentTests-Info.plist"; sourceTree = "<group>"; };
-		C85E8E21189435CA00C4C48F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C85E8E2E1894397000C4C48F /* FLTIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrationTests.m; sourceTree = "<group>"; };
-		C85E8E30189439D400C4C48F /* FLTIntegration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTIntegration.h; sourceTree = "<group>"; };
-		C85E8E31189439D400C4C48F /* FLTIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegration.m; sourceTree = "<group>"; };
-		C85E8E331894406C00C4C48F /* FLTRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTRepository.h; sourceTree = "<group>"; };
-		C85E8E341894406C00C4C48F /* FLTRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTRepository.m; sourceTree = "<group>"; };
-		C85E8E361894411400C4C48F /* FLTIntegrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTIntegrator.h; sourceTree = "<group>"; };
-		C85E8E371894411400C4C48F /* FLTIntegrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrator.m; sourceTree = "<group>"; };
-		C85E8E391894419200C4C48F /* FLTIntegratorConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTIntegratorConfiguration.h; sourceTree = "<group>"; };
-		C85E8E3A1894419200C4C48F /* FLTIntegratorConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegratorConfiguration.m; sourceTree = "<group>"; };
-		C85E8E3C1894425D00C4C48F /* FLTIntegrationReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTIntegrationReport.h; sourceTree = "<group>"; };
-		C85E8E3D1894425D00C4C48F /* FLTIntegrationReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrationReport.m; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		C85E8DF3189435CA00C4C48F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C85E8DFA189435CA00C4C48F /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C85E8E14189435CA00C4C48F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C85E8E1A189435CA00C4C48F /* Cocoa.framework in Frameworks */,
-				C85E8E19189435CA00C4C48F /* XCTest.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		C85E8DED189435CA00C4C48F = {
-			isa = PBXGroup;
-			children = (
-				C85E8DFF189435CA00C4C48F /* Filament */,
-				C85E8E1D189435CA00C4C48F /* FilamentTests */,
-				C85E8DF8189435CA00C4C48F /* Frameworks */,
-				C85E8DF7189435CA00C4C48F /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		C85E8DF7189435CA00C4C48F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C85E8DF6189435CA00C4C48F /* Filament.app */,
-				C85E8E17189435CA00C4C48F /* FilamentTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C85E8DF8189435CA00C4C48F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C85E8DF9189435CA00C4C48F /* Cocoa.framework */,
-				C85E8E18189435CA00C4C48F /* XCTest.framework */,
-				C85E8DFB189435CA00C4C48F /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C85E8DFB189435CA00C4C48F /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C85E8DFC189435CA00C4C48F /* AppKit.framework */,
-				C85E8DFD189435CA00C4C48F /* CoreData.framework */,
-				C85E8DFE189435CA00C4C48F /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		C85E8DFF189435CA00C4C48F /* Filament */ = {
-			isa = PBXGroup;
-			children = (
-				C85E8E0B189435CA00C4C48F /* FLTAppDelegate.h */,
-				C85E8E0C189435CA00C4C48F /* FLTAppDelegate.m */,
-				C85E8E3C1894425D00C4C48F /* FLTIntegrationReport.h */,
-				C85E8E3D1894425D00C4C48F /* FLTIntegrationReport.m */,
-				C85E8E361894411400C4C48F /* FLTIntegrator.h */,
-				C85E8E371894411400C4C48F /* FLTIntegrator.m */,
-				C85E8E391894419200C4C48F /* FLTIntegratorConfiguration.h */,
-				C85E8E3A1894419200C4C48F /* FLTIntegratorConfiguration.m */,
-				C85E8E30189439D400C4C48F /* FLTIntegration.h */,
-				C85E8E31189439D400C4C48F /* FLTIntegration.m */,
-				C85E8E331894406C00C4C48F /* FLTRepository.h */,
-				C85E8E341894406C00C4C48F /* FLTRepository.m */,
-				C85E8E11189435CA00C4C48F /* Images.xcassets */,
-				C85E8E0E189435CA00C4C48F /* MainMenu.xib */,
-				C85E8E00189435CA00C4C48F /* Supporting Files */,
-			);
-			path = Filament;
-			sourceTree = "<group>";
-		};
-		C85E8E00189435CA00C4C48F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C85E8E01189435CA00C4C48F /* Filament-Info.plist */,
-				C85E8E02189435CA00C4C48F /* InfoPlist.strings */,
-				C85E8E05189435CA00C4C48F /* main.m */,
-				C85E8E07189435CA00C4C48F /* Filament-Prefix.pch */,
-				C85E8E08189435CA00C4C48F /* Credits.rtf */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		C85E8E1D189435CA00C4C48F /* FilamentTests */ = {
-			isa = PBXGroup;
-			children = (
-				C85E8E2E1894397000C4C48F /* FLTIntegrationTests.m */,
-				C85E8E1E189435CA00C4C48F /* Supporting Files */,
-			);
-			path = FilamentTests;
-			sourceTree = "<group>";
-		};
-		C85E8E1E189435CA00C4C48F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C85E8E1F189435CA00C4C48F /* FilamentTests-Info.plist */,
-				C85E8E20189435CA00C4C48F /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		C85E8DF5189435CA00C4C48F /* Filament */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C85E8E27189435CA00C4C48F /* Build configuration list for PBXNativeTarget "Filament" */;
-			buildPhases = (
-				C85E8DF2189435CA00C4C48F /* Sources */,
-				C85E8DF3189435CA00C4C48F /* Frameworks */,
-				C85E8DF4189435CA00C4C48F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Filament;
-			productName = Filament;
-			productReference = C85E8DF6189435CA00C4C48F /* Filament.app */;
-			productType = "com.apple.product-type.application";
-		};
-		C85E8E16189435CA00C4C48F /* FilamentTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C85E8E2A189435CA00C4C48F /* Build configuration list for PBXNativeTarget "FilamentTests" */;
-			buildPhases = (
-				C85E8E13189435CA00C4C48F /* Sources */,
-				C85E8E14189435CA00C4C48F /* Frameworks */,
-				C85E8E15189435CA00C4C48F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C85E8E1C189435CA00C4C48F /* PBXTargetDependency */,
-			);
-			name = FilamentTests;
-			productName = FilamentTests;
-			productReference = C85E8E17189435CA00C4C48F /* FilamentTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		C85E8DEE189435CA00C4C48F /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				CLASSPREFIX = FLT;
-				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = "Yellowbek Ltd";
-				TargetAttributes = {
-					C85E8E16189435CA00C4C48F = {
-						TestTargetID = C85E8DF5189435CA00C4C48F;
-					};
-				};
-			};
-			buildConfigurationList = C85E8DF1189435CA00C4C48F /* Build configuration list for PBXProject "Filament" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = C85E8DED189435CA00C4C48F;
-			productRefGroup = C85E8DF7189435CA00C4C48F /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				C85E8DF5189435CA00C4C48F /* Filament */,
-				C85E8E16189435CA00C4C48F /* FilamentTests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		C85E8DF4189435CA00C4C48F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C85E8E04189435CA00C4C48F /* InfoPlist.strings in Resources */,
-				C85E8E12189435CA00C4C48F /* Images.xcassets in Resources */,
-				C85E8E0A189435CA00C4C48F /* Credits.rtf in Resources */,
-				C85E8E10189435CA00C4C48F /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C85E8E15189435CA00C4C48F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C85E8E22189435CA00C4C48F /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		C85E8DF2189435CA00C4C48F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C85E8E3B1894419200C4C48F /* FLTIntegratorConfiguration.m in Sources */,
-				C85E8E351894406C00C4C48F /* FLTRepository.m in Sources */,
-				C85E8E32189439D400C4C48F /* FLTIntegration.m in Sources */,
-				C85E8E06189435CA00C4C48F /* main.m in Sources */,
-				C85E8E381894411400C4C48F /* FLTIntegrator.m in Sources */,
-				C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */,
-				C85E8E0D189435CA00C4C48F /* FLTAppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C85E8E13189435CA00C4C48F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C85E8E2F1894397000C4C48F /* FLTIntegrationTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C85E8E1C189435CA00C4C48F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C85E8DF5189435CA00C4C48F /* Filament */;
-			targetProxy = C85E8E1B189435CA00C4C48F /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		C85E8E02189435CA00C4C48F /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C85E8E03189435CA00C4C48F /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C85E8E08189435CA00C4C48F /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C85E8E09189435CA00C4C48F /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		C85E8E0E189435CA00C4C48F /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C85E8E0F189435CA00C4C48F /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		C85E8E20189435CA00C4C48F /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C85E8E21189435CA00C4C48F /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		C85E8E25189435CA00C4C48F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		C85E8E26189435CA00C4C48F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		C85E8E28189435CA00C4C48F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Filament/Filament-Prefix.pch";
-				INFOPLIST_FILE = "Filament/Filament-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		C85E8E29189435CA00C4C48F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Filament/Filament-Prefix.pch";
-				INFOPLIST_FILE = "Filament/Filament-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		C85E8E2B189435CA00C4C48F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Filament.app/Contents/MacOS/Filament";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Filament/Filament-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "FilamentTests/FilamentTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		C85E8E2C189435CA00C4C48F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Filament.app/Contents/MacOS/Filament";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Filament/Filament-Prefix.pch";
-				INFOPLIST_FILE = "FilamentTests/FilamentTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		C85E8DF1189435CA00C4C48F /* Build configuration list for PBXProject "Filament" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C85E8E25189435CA00C4C48F /* Debug */,
-				C85E8E26189435CA00C4C48F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C85E8E27189435CA00C4C48F /* Build configuration list for PBXNativeTarget "Filament" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C85E8E28189435CA00C4C48F /* Debug */,
-				C85E8E29189435CA00C4C48F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C85E8E2A189435CA00C4C48F /* Build configuration list for PBXNativeTarget "FilamentTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C85E8E2B189435CA00C4C48F /* Debug */,
-				C85E8E2C189435CA00C4C48F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = C85E8DEE189435CA00C4C48F /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>151E755F298041D9988ACF0A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>21F4609F3F994AC19746ED2C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>21F4609F3F994AC19746ED2C</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-FilamentTests.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>AFF17EB512254761AD550D9F</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-FilamentTests.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Pods-FilamentTests.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8DED189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8DFF189435CA00C4C48F</string>
+				<string>C85E8E1D189435CA00C4C48F</string>
+				<string>C85E8DF8189435CA00C4C48F</string>
+				<string>C85E8DF7189435CA00C4C48F</string>
+				<string>AFF17EB512254761AD550D9F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8DEE189435CA00C4C48F</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>CLASSPREFIX</key>
+				<string>FLT</string>
+				<key>LastUpgradeCheck</key>
+				<string>0500</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>Yellowbek Ltd</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>C85E8E16189435CA00C4C48F</key>
+					<dict>
+						<key>TestTargetID</key>
+						<string>C85E8DF5189435CA00C4C48F</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>C85E8DF1189435CA00C4C48F</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>C85E8DED189435CA00C4C48F</string>
+			<key>productRefGroup</key>
+			<string>C85E8DF7189435CA00C4C48F</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>C85E8DF5189435CA00C4C48F</string>
+				<string>C85E8E16189435CA00C4C48F</string>
+			</array>
+		</dict>
+		<key>C85E8DF1189435CA00C4C48F</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>C85E8E25189435CA00C4C48F</string>
+				<string>C85E8E26189435CA00C4C48F</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>C85E8DF2189435CA00C4C48F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>C85E8E3B1894419200C4C48F</string>
+				<string>C85E8E351894406C00C4C48F</string>
+				<string>C85E8E32189439D400C4C48F</string>
+				<string>C85E8E06189435CA00C4C48F</string>
+				<string>C85E8E381894411400C4C48F</string>
+				<string>C85E8E3E1894425D00C4C48F</string>
+				<string>C85E8E0D189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C85E8DF3189435CA00C4C48F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>C85E8DFA189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C85E8DF4189435CA00C4C48F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>C85E8E04189435CA00C4C48F</string>
+				<string>C85E8E12189435CA00C4C48F</string>
+				<string>C85E8E0A189435CA00C4C48F</string>
+				<string>C85E8E10189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C85E8DF5189435CA00C4C48F</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>C85E8E27189435CA00C4C48F</string>
+			<key>buildPhases</key>
+			<array>
+				<string>C85E8DF2189435CA00C4C48F</string>
+				<string>C85E8DF3189435CA00C4C48F</string>
+				<string>C85E8DF4189435CA00C4C48F</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Filament</string>
+			<key>productName</key>
+			<string>Filament</string>
+			<key>productReference</key>
+			<string>C85E8DF6189435CA00C4C48F</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>C85E8DF6189435CA00C4C48F</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Filament.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>C85E8DF7189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8DF6189435CA00C4C48F</string>
+				<string>C85E8E17189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8DF8189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8DF9189435CA00C4C48F</string>
+				<string>C85E8E18189435CA00C4C48F</string>
+				<string>C85E8DFB189435CA00C4C48F</string>
+				<string>21F4609F3F994AC19746ED2C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8DF9189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Cocoa.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/Cocoa.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>C85E8DFA189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8DF9189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8DFB189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8DFC189435CA00C4C48F</string>
+				<string>C85E8DFD189435CA00C4C48F</string>
+				<string>C85E8DFE189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Other Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8DFC189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>AppKit.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/AppKit.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>C85E8DFD189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>CoreData.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/CoreData.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>C85E8DFE189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Foundation.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/Foundation.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>C85E8DFF189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E0B189435CA00C4C48F</string>
+				<string>C85E8E0C189435CA00C4C48F</string>
+				<string>C85E8E3C1894425D00C4C48F</string>
+				<string>C85E8E3D1894425D00C4C48F</string>
+				<string>C85E8E361894411400C4C48F</string>
+				<string>C85E8E371894411400C4C48F</string>
+				<string>C85E8E391894419200C4C48F</string>
+				<string>C85E8E3A1894419200C4C48F</string>
+				<string>C85E8E30189439D400C4C48F</string>
+				<string>C85E8E31189439D400C4C48F</string>
+				<string>C85E8E331894406C00C4C48F</string>
+				<string>C85E8E341894406C00C4C48F</string>
+				<string>C85E8E11189435CA00C4C48F</string>
+				<string>C85E8E0E189435CA00C4C48F</string>
+				<string>C85E8E00189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>Filament</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E00189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E01189435CA00C4C48F</string>
+				<string>C85E8E02189435CA00C4C48F</string>
+				<string>C85E8E05189435CA00C4C48F</string>
+				<string>C85E8E07189435CA00C4C48F</string>
+				<string>C85E8E08189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E01189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Filament-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E02189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E03189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E03189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.strings</string>
+			<key>name</key>
+			<string>en</string>
+			<key>path</key>
+			<string>en.lproj/InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E04189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E02189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E05189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>main.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E06189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E05189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E07189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Filament-Prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E08189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E09189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Credits.rtf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E09189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.rtf</string>
+			<key>name</key>
+			<string>en</string>
+			<key>path</key>
+			<string>en.lproj/Credits.rtf</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E0A189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E08189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E0B189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>FLTAppDelegate.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E0C189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTAppDelegate.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E0D189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E0C189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E0E189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E0F189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>MainMenu.xib</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E0F189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.xib</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/MainMenu.xib</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E10189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E0E189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E11189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Images.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E12189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E11189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E13189435CA00C4C48F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>C85E8E2F1894397000C4C48F</string>
+				<string>C85E8E401894707F00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C85E8E14189435CA00C4C48F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>C85E8E1A189435CA00C4C48F</string>
+				<string>C85E8E19189435CA00C4C48F</string>
+				<string>151E755F298041D9988ACF0A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C85E8E15189435CA00C4C48F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>C85E8E22189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C85E8E16189435CA00C4C48F</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>C85E8E2A189435CA00C4C48F</string>
+			<key>buildPhases</key>
+			<array>
+				<string>F024C14215C54B6FA83E99BD</string>
+				<string>C85E8E13189435CA00C4C48F</string>
+				<string>C85E8E14189435CA00C4C48F</string>
+				<string>C85E8E15189435CA00C4C48F</string>
+				<string>C8A18CFC8BED4970AF5D4024</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>C85E8E1C189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>FilamentTests</string>
+			<key>productName</key>
+			<string>FilamentTests</string>
+			<key>productReference</key>
+			<string>C85E8E17189435CA00C4C48F</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>C85E8E17189435CA00C4C48F</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>FilamentTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>C85E8E18189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>XCTest.framework</string>
+			<key>path</key>
+			<string>Library/Frameworks/XCTest.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>C85E8E19189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E18189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E1A189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8DF9189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E1B189435CA00C4C48F</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>C85E8DEE189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>C85E8DF5189435CA00C4C48F</string>
+			<key>remoteInfo</key>
+			<string>Filament</string>
+		</dict>
+		<key>C85E8E1C189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>C85E8DF5189435CA00C4C48F</string>
+			<key>targetProxy</key>
+			<string>C85E8E1B189435CA00C4C48F</string>
+		</dict>
+		<key>C85E8E1D189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E2E1894397000C4C48F</string>
+				<string>C85E8E3F1894707F00C4C48F</string>
+				<string>C85E8E1E189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>FilamentTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E1E189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E1F189435CA00C4C48F</string>
+				<string>C85E8E20189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E1F189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>FilamentTests-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E20189435CA00C4C48F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C85E8E21189435CA00C4C48F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E21189435CA00C4C48F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.strings</string>
+			<key>name</key>
+			<string>en</string>
+			<key>path</key>
+			<string>en.lproj/InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E22189435CA00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E20189435CA00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E25189435CA00C4C48F</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
+				<string>YES</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.9</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>C85E8E26189435CA00C4C48F</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_ENABLE_OBJC_EXCEPTIONS</key>
+				<string>YES</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>MACOSX_DEPLOYMENT_TARGET</key>
+				<string>10.9</string>
+				<key>SDKROOT</key>
+				<string>macosx</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>C85E8E27189435CA00C4C48F</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>C85E8E28189435CA00C4C48F</string>
+				<string>C85E8E29189435CA00C4C48F</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>C85E8E28189435CA00C4C48F</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Filament/Filament-Prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Filament/Filament-Info.plist</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>app</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>C85E8E29189435CA00C4C48F</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Filament/Filament-Prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Filament/Filament-Info.plist</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>app</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>C85E8E2A189435CA00C4C48F</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>C85E8E2B189435CA00C4C48F</string>
+				<string>C85E8E2C189435CA00C4C48F</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>C85E8E2B189435CA00C4C48F</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>AFF17EB512254761AD550D9F</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(BUILT_PRODUCTS_DIR)/Filament.app/Contents/MacOS/Filament</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Filament/Filament-Prefix.pch</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>FilamentTests/FilamentTests-Info.plist</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUNDLE_LOADER)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>xctest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>C85E8E2C189435CA00C4C48F</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>AFF17EB512254761AD550D9F</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(BUILT_PRODUCTS_DIR)/Filament.app/Contents/MacOS/Filament</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(DEVELOPER_FRAMEWORKS_DIR)</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Filament/Filament-Prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>FilamentTests/FilamentTests-Info.plist</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUNDLE_LOADER)</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>xctest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>C85E8E2E1894397000C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTIntegrationTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E2F1894397000C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E2E1894397000C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E30189439D400C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>FLTIntegration.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E31189439D400C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTIntegration.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E32189439D400C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E31189439D400C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E331894406C00C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>FLTRepository.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E341894406C00C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTRepository.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E351894406C00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E341894406C00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E361894411400C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>FLTIntegrator.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E371894411400C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTIntegrator.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E381894411400C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E371894411400C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E391894419200C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>FLTIntegratorConfiguration.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E3A1894419200C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTIntegratorConfiguration.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E3B1894419200C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E3A1894419200C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E3C1894425D00C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>FLTIntegrationReport.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E3D1894425D00C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTIntegrationReport.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E3E1894425D00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E3D1894425D00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C85E8E3F1894707F00C4C48F</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>FLTIntegratorTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C85E8E401894707F00C4C48F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C85E8E3F1894707F00C4C48F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C8A18CFC8BED4970AF5D4024</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Pods-FilamentTests-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>F024C14215C54B6FA83E99BD</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>C85E8DEE189435CA00C4C48F</string>
+</dict>
+</plist>

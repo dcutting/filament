@@ -1,1 +1,10 @@
+PODS:
+  - TRVSMonitor (0.0.3)
+
+DEPENDENCIES:
+  - TRVSMonitor (~> 0.0.3)
+
+SPEC CHECKSUMS:
+  TRVSMonitor: cc2b3d6f4cf18639464f6b8295f1b4722f4d4f14
+
 COCOAPODS: 0.29.0

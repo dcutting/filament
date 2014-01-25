@@ -5,6 +5,8 @@
 @implementation FLTIntegrator
 
 - (void)integrateConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
+
+    completionHandler(nil);
 }
 
 @end
