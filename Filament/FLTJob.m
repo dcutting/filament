@@ -4,4 +4,14 @@
 
 @implementation FLTJob
 
+- (instancetype)init {
+    NSAssert(NO, @"Cannot use default constructor.");
+    return nil;
+}
+
+- (instancetype)initWithGitURL:(NSURL *)gitURL branchName:(NSString *)branchName {
+    self = [super init];
+    return self;
+}
+
 @end

@@ -4,4 +4,6 @@
 
 @interface FLTJob : NSObject
 
+- (instancetype)initWithGitURL:(NSURL *)gitURL branchName:(NSString *)branchName;
+
 @end

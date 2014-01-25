@@ -10,9 +10,17 @@
 
 @implementation FLTJobTests
 
-- (void)testConstruction {
+- (void)testConstruction_default_throws {
     
-    FLTJob *job = [FLTJob new];
+    XCTAssertThrows([FLTJob new], @"");
+}
+
+- (void)testConstruction_gitURLAndBranchName_OK {
+    
+    NSURL *gitURL = [NSURL URLWithString:@"https://github.com/AFNetworking/AFNetworking.git"];
+    NSString *branchName = @"master";
+    
+    FLTJob *job = [[FLTJob alloc] initWithGitURL:gitURL branchName:branchName];
     
     XCTAssertNotNil(job, @"");
 }
