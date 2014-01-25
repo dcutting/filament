@@ -17,7 +17,8 @@
 		C85E8E19189435CA00C4C48F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C85E8E18189435CA00C4C48F /* XCTest.framework */; };
 		C85E8E1A189435CA00C4C48F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C85E8DF9189435CA00C4C48F /* Cocoa.framework */; };
 		C85E8E22189435CA00C4C48F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C85E8E20189435CA00C4C48F /* InfoPlist.strings */; };
-		C85E8E24189435CA00C4C48F /* FilamentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E23189435CA00C4C48F /* FilamentTests.m */; };
+		C85E8E2F1894397000C4C48F /* FLTJobTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E2E1894397000C4C48F /* FLTJobTests.m */; };
+		C85E8E32189439D400C4C48F /* FLTJob.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E31189439D400C4C48F /* FLTJob.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +50,9 @@
 		C85E8E18189435CA00C4C48F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C85E8E1F189435CA00C4C48F /* FilamentTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FilamentTests-Info.plist"; sourceTree = "<group>"; };
 		C85E8E21189435CA00C4C48F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C85E8E23189435CA00C4C48F /* FilamentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilamentTests.m; sourceTree = "<group>"; };
+		C85E8E2E1894397000C4C48F /* FLTJobTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTJobTests.m; sourceTree = "<group>"; };
+		C85E8E30189439D400C4C48F /* FLTJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTJob.h; sourceTree = "<group>"; };
+		C85E8E31189439D400C4C48F /* FLTJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTJob.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,8 +120,10 @@
 			children = (
 				C85E8E0B189435CA00C4C48F /* FLTAppDelegate.h */,
 				C85E8E0C189435CA00C4C48F /* FLTAppDelegate.m */,
-				C85E8E0E189435CA00C4C48F /* MainMenu.xib */,
+				C85E8E30189439D400C4C48F /* FLTJob.h */,
+				C85E8E31189439D400C4C48F /* FLTJob.m */,
 				C85E8E11189435CA00C4C48F /* Images.xcassets */,
+				C85E8E0E189435CA00C4C48F /* MainMenu.xib */,
 				C85E8E00189435CA00C4C48F /* Supporting Files */,
 			);
 			path = Filament;
@@ -139,7 +144,7 @@
 		C85E8E1D189435CA00C4C48F /* FilamentTests */ = {
 			isa = PBXGroup;
 			children = (
-				C85E8E23189435CA00C4C48F /* FilamentTests.m */,
+				C85E8E2E1894397000C4C48F /* FLTJobTests.m */,
 				C85E8E1E189435CA00C4C48F /* Supporting Files */,
 			);
 			path = FilamentTests;
@@ -253,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C85E8E32189439D400C4C48F /* FLTJob.m in Sources */,
 				C85E8E06189435CA00C4C48F /* main.m in Sources */,
 				C85E8E0D189435CA00C4C48F /* FLTAppDelegate.m in Sources */,
 			);
@@ -262,7 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C85E8E24189435CA00C4C48F /* FilamentTests.m in Sources */,
+				C85E8E2F1894397000C4C48F /* FLTJobTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +471,7 @@
 				C85E8E29189435CA00C4C48F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C85E8E2A189435CA00C4C48F /* Build configuration list for PBXNativeTarget "FilamentTests" */ = {
 			isa = XCConfigurationList;
@@ -473,6 +480,7 @@
 				C85E8E2C189435CA00C4C48F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
