@@ -1,17 +1,18 @@
 //  Copyright (c) 2014 Yellowbek Ltd. All rights reserved.
 
-#import "FLTJob.h"
+#import "FLTRepository.h"
 
-@implementation FLTJob
-
-- (instancetype)init {
-    NSAssert(NO, @"Cannot use default constructor.");
-    return nil;
-}
+@implementation FLTRepository
 
 - (instancetype)initWithGitURL:(NSURL *)gitURL branchName:(NSString *)branchName {
+
     self = [super init];
     return self;
+}
+
+- (void)checkoutWithCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler {
+    
+    
 }
 
 @end

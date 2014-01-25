@@ -37,3 +37,40 @@ Errors: 3
 Analyser errors: 4
 Tests failed: 1
 Total tests: 180
+
+## Design
+
+To run a job
+
+Mark job as in progress
+Clone git repository
+Checkout branch
+Read .filament
+	Extract workspace and scheme name
+Run xctool
+Save plain log and json-stream log
+Parse json-stream.json file
+	For build phase
+		Tally warnings
+		Tally errors
+	For analysis phase
+		Tally errors
+	For test phase
+		Extract number of failed
+		Extract total number
+Write build record for job
+	Include plain log
+	Write job summary file
+		Warnings
+		Errors
+		Analysis errors
+		Tests failed
+		Total tests
+Mark job as OK or failed due to error, tests, warnings, analysis (in that order)
+Fire build notification
+
+To serve results
+
+Read summary of latest build for each job
+For jobs in progress
+Serve as single HTML page
