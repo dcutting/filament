@@ -38,10 +38,10 @@
                          @"-reporter", @"json-stream",
                          @"clean", @"analyze", @"test"
                          ]];
-    [task launch];
     task.terminationHandler = ^(NSTask *task) {
         [self callCompletionHandler:completionHandler];
     };
+    [task launch];
 }
 
 - (void) callCompletionHandler:(FLTIntegratorCompletionHandler)completionHandler {
