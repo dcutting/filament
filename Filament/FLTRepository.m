@@ -12,7 +12,7 @@
 
 - (void)checkoutWithCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler {
     
-    
+    completionHandler(nil);
 }
 
 @end
