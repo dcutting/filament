@@ -21,7 +21,7 @@
     XCTAssertNotNil(report, @"Expected non-nil report.");
 }
 
-- (void)testReportWithBuildOutput_errorsAndWarnings_failure {
+- (void)testReportWithBuildOutput_errorsAndWarnings_failureWithErrors {
     
     NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithErrorsAndWarnings.json"];
     
@@ -60,7 +60,7 @@
     XCTAssertEqual(expectedWarnings, report.numberOfWarnings, @"Expected %ld but got %ld for number of warnings.", expectedWarnings, (long)report.numberOfWarnings);
 }
 
-- (void)testReportWithBuildOutput_warnings_failure {
+- (void)testReportWithBuildOutput_warnings_failureWithWarnings {
     
     NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithWarnings.json"];
     
