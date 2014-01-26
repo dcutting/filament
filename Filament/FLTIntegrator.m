@@ -39,6 +39,9 @@
                          @"clean", @"analyze", @"test"
                          ]];
     [task launch];
+    task.terminationHandler = ^(NSTask *task) {
+        [self callCompletionHandler:completionHandler];
+    };
 }
 
 - (void) callCompletionHandler:(FLTIntegratorCompletionHandler)completionHandler {

@@ -85,6 +85,29 @@ static NSString *XctoolPath = @"/path/to/xctool";
     [self assertNoCompletion];
 }
 
+- (void)testIntegrateConfiguration_launchesBuildTask_callsCompletionHandlerWhenTaskCompletes {
+    
+    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
+    configuration.rootPath = @"/root/path";
+    configuration.workspace = @"workspace";
+    configuration.scheme = @"scheme";
+    
+    __block void (^terminationHandler)(NSTask *);
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
+    
+    [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+        
+        [self signalCompletion];
+    }];
+    
+    terminationHandler(self.mockTask);
+    [self assertCompletion];
+}
+
 - (void)signalCompletion {
     
     self.didCompleteAsync = YES;
