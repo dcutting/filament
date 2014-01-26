@@ -6,4 +6,6 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+- (IBAction)clickedIntegrate:(id)sender;
+
 @end

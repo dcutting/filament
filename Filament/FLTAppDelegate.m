@@ -7,7 +7,10 @@
 @implementation FLTAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    
+}
+
+- (IBAction)clickedIntegrate:(id)sender {
+
     NSString *xctoolPath = @"~/Code/3rdParty/xctool/xctool.sh";
 
     FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
@@ -16,7 +19,7 @@
     configuration.scheme = @"BasicApp";
 
     FLTIntegrator *integrator = [[FLTIntegrator alloc] initWithXctoolPath:xctoolPath taskFactory:[NSTaskFactory new]];
-    
+
     NSLog(@"Started integration");
     [integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
         NSLog(@"Completed integration.");
