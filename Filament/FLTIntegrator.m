@@ -23,11 +23,15 @@
 
 - (void)integrateConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
 
-    if (!configuration) {
+    if (configuration) {
+        [self launchBuild:configuration completionHandler:completionHandler];
+    } else {
         [self callCompletionHandler:completionHandler];
-        return;
     }
-    
+}
+
+- (void)launchBuild:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
+
     NSTask *task = [self.taskFactory task];
     [task setCurrentDirectoryPath:configuration.rootPath];
     [task setLaunchPath:self.xctoolPath];
