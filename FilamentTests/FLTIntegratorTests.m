@@ -21,6 +21,7 @@ static NSString *Scheme = @"MyScheme";
 @property (nonatomic, strong) FLTIntegrator *integrator;
 @property (nonatomic, strong) id mockTaskFactory;
 @property (nonatomic, strong) id mockTask;
+@property (nonatomic, strong) id mockIntegrationReportGenerator;
 @property (nonatomic, strong) FLTIntegratorConfiguration *dummyConfiguration;
 
 @property (nonatomic, strong) TRVSMonitor *asyncMonitor;
@@ -36,7 +37,9 @@ static NSString *Scheme = @"MyScheme";
     self.mockTask = [OCMockObject niceMockForClass:[NSTask class]];
     [[[self.mockTaskFactory stub] andReturn:self.mockTask] task];
     
-    self.integrator = [[FLTIntegrator alloc] initWithXctoolPath:XctoolPath taskFactory:self.mockTaskFactory];
+    self.mockIntegrationReportGenerator = [OCMockObject niceMockForClass:[FLTIntegrationReportGenerator class]];
+    
+    self.integrator = [[FLTIntegrator alloc] initWithXctoolPath:XctoolPath taskFactory:self.mockTaskFactory integrationReportGenerator:self.mockIntegrationReportGenerator];
     
     self.dummyConfiguration = [FLTIntegratorConfiguration new];
     self.dummyConfiguration.resultsPath = ResultsPath;
@@ -108,7 +111,7 @@ static NSString *Scheme = @"MyScheme";
     [self assertCompletion];
 }
 
-- (void)testIntegrateConfiguration_buildFails_reportsFailure {
+- (void)testIntegrateConfiguration_buildTaskCompletes_generatesReport {
     
     __block void (^terminationHandler)(NSTask *);
     [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
@@ -117,15 +120,17 @@ static NSString *Scheme = @"MyScheme";
         terminationHandler = block;
     }] setTerminationHandler:[OCMArg any]];
     
-    [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:^(FLTIntegrationReport *report) {
-        
-        XCTAssertEqual(FLTIntegrationReportStatusFailure, report.status, @"Expected report with failure status.");
-        
-        [self signalCompletion];
-    }];
+    [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:nil];
+
+    NSString *buildOutput = @"builded";
+    id mockString = [OCMockObject niceMockForClass:[NSString class]];
+    [[[[mockString stub] andReturn:buildOutput] classMethod] stringWithContentsOfFile:ResultsPath encoding:NSUTF8StringEncoding error:(NSError __autoreleasing **)[OCMArg anyPointer]];
+
+    [[self.mockIntegrationReportGenerator expect] reportWithBuildOutput:buildOutput];
     
     terminationHandler(self.mockTask);
-    [self assertCompletion];
+    
+    [self.mockIntegrationReportGenerator verify];
 }
 
 - (void)signalCompletion {

@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FLTIntegrationReport.h"
+#import "FLTIntegrationReportGenerator.h"
 #import "FLTIntegratorConfiguration.h"
 #import "NSTaskFactory.h"
 
@@ -10,7 +10,7 @@ typedef void(^FLTIntegratorCompletionHandler)(FLTIntegrationReport *report);
 
 @interface FLTIntegrator : NSObject
 
-- (instancetype)initWithXctoolPath:(NSString *)xctoolPath taskFactory:(NSTaskFactory *)taskFactory;
+- (instancetype)initWithXctoolPath:(NSString *)xctoolPath taskFactory:(NSTaskFactory *)taskFactory integrationReportGenerator:(FLTIntegrationReportGenerator *)integrationReportGenerator;
 - (void)integrateConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler;
 
 @end

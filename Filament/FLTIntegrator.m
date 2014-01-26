@@ -6,17 +6,19 @@
 
 @property (nonatomic, copy) NSString *xctoolPath;
 @property (nonatomic, strong) NSTaskFactory *taskFactory;
+@property (nonatomic, strong) FLTIntegrationReportGenerator *integrationReportGenerator;
 
 @end
 
 @implementation FLTIntegrator
 
-- (instancetype)initWithXctoolPath:(NSString *)xctoolPath taskFactory:(NSTaskFactory *)taskFactory {
+- (instancetype)initWithXctoolPath:(NSString *)xctoolPath taskFactory:(NSTaskFactory *)taskFactory integrationReportGenerator:(FLTIntegrationReportGenerator *)integrationReportGenerator {
 
     self = [super init];
     if (self) {
         _xctoolPath = xctoolPath;
         _taskFactory = taskFactory;
+        _integrationReportGenerator = integrationReportGenerator;
     }
     return self;
 }
@@ -44,12 +46,18 @@
                          ]];
     task.terminationHandler = ^(NSTask *task) {
 
-        FLTIntegrationReport *report = [FLTIntegrationReport new];
-        report.status = FLTIntegrationReportStatusFailure;
-
-        [self callCompletionHandler:completionHandler integrationReport:report];
+        [self processBuildResultsAtPath:configuration.resultsPath completionHandler:completionHandler];
     };
     [task launch];
+}
+
+- (void)processBuildResultsAtPath:(NSString *)path completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
+    
+    NSString *output = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    
+    [self.integrationReportGenerator reportWithBuildOutput:output];
+    
+    [self callCompletionHandler:completionHandler integrationReport:nil];
 }
 
 - (void) callCompletionHandler:(FLTIntegratorCompletionHandler)completionHandler integrationReport:(FLTIntegrationReport *)report {

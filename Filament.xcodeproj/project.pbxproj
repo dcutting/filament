@@ -27,6 +27,7 @@
 		C85E8E401894707F00C4C48F /* FLTIntegratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E3F1894707F00C4C48F /* FLTIntegratorTests.m */; };
 		C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E42189479A700C4C48F /* NSTaskFactory.m */; };
 		C8FF3D0018949D0F00DF9ABE /* NSTaskFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */; };
+		C8FF3D0318951A3700DF9ABE /* FLTIntegrationReportGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3D0218951A3700DF9ABE /* FLTIntegrationReportGenerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,8 @@
 		C85E8E41189479A700C4C48F /* NSTaskFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTaskFactory.h; sourceTree = "<group>"; };
 		C85E8E42189479A700C4C48F /* NSTaskFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskFactory.m; sourceTree = "<group>"; };
 		C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskFactoryTests.m; sourceTree = "<group>"; };
+		C8FF3D0118951A3700DF9ABE /* FLTIntegrationReportGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTIntegrationReportGenerator.h; sourceTree = "<group>"; };
+		C8FF3D0218951A3700DF9ABE /* FLTIntegrationReportGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrationReportGenerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,8 @@
 				C85E8E31189439D400C4C48F /* FLTIntegration.m */,
 				C85E8E3C1894425D00C4C48F /* FLTIntegrationReport.h */,
 				C85E8E3D1894425D00C4C48F /* FLTIntegrationReport.m */,
+				C8FF3D0118951A3700DF9ABE /* FLTIntegrationReportGenerator.h */,
+				C8FF3D0218951A3700DF9ABE /* FLTIntegrationReportGenerator.m */,
 				C85E8E361894411400C4C48F /* FLTIntegrator.h */,
 				C85E8E371894411400C4C48F /* FLTIntegrator.m */,
 				C85E8E391894419200C4C48F /* FLTIntegratorConfiguration.h */,
@@ -337,6 +342,7 @@
 				C85E8E381894411400C4C48F /* FLTIntegrator.m in Sources */,
 				C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */,
 				C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */,
+				C8FF3D0318951A3700DF9ABE /* FLTIntegrationReportGenerator.m in Sources */,
 				C85E8E0D189435CA00C4C48F /* FLTAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
