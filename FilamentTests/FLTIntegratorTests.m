@@ -8,13 +8,20 @@
 #import "FLTIntegration.h"
 
 static NSTimeInterval AsyncTimeout = 1.0f;
+
 static NSString *XctoolPath = @"/path/to/xctool";
+
+static NSString *ResultsPath = @"/path/to/results";
+static NSString *RootPath = @"/the/root/path";
+static NSString *Workspace = @"MyWorkspace.xcworkspace";
+static NSString *Scheme = @"MyScheme";
 
 @interface FLTIntegratorTests : XCTestCase
 
 @property (nonatomic, strong) FLTIntegrator *integrator;
 @property (nonatomic, strong) id mockTaskFactory;
 @property (nonatomic, strong) id mockTask;
+@property (nonatomic, strong) FLTIntegratorConfiguration *dummyConfiguration;
 
 @property (nonatomic, strong) TRVSMonitor *asyncMonitor;
 @property (nonatomic, assign) BOOL didCompleteAsync;
@@ -30,6 +37,12 @@ static NSString *XctoolPath = @"/path/to/xctool";
     [[[self.mockTaskFactory stub] andReturn:self.mockTask] task];
     
     self.integrator = [[FLTIntegrator alloc] initWithXctoolPath:XctoolPath taskFactory:self.mockTaskFactory];
+    
+    self.dummyConfiguration = [FLTIntegratorConfiguration new];
+    self.dummyConfiguration.resultsPath = ResultsPath;
+    self.dummyConfiguration.rootPath = RootPath;
+    self.dummyConfiguration.workspace = Workspace;
+    self.dummyConfiguration.scheme = Scheme;
     
     self.asyncMonitor = [TRVSMonitor monitor];
     self.didCompleteAsync = NO;
@@ -49,41 +62,27 @@ static NSString *XctoolPath = @"/path/to/xctool";
 
 - (void)testIntegrateConfiguration_validConfiguration_launchesBuildTask {
     
-    NSString *rootPath = @"/the/root/path";
-    NSString *workspace = @"MyWorkspace.xcworkspace";
-    NSString *scheme = @"MyScheme";
-    
     NSArray *arguments = @[
-                           @"-workspace", workspace,
-                           @"-scheme", scheme,
+                           @"-workspace", Workspace,
+                           @"-scheme", Scheme,
                            @"-sdk", @"iphonesimulator",
-                           @"-reporter", @"json-stream:build.json",
+                           @"-reporter", [NSString stringWithFormat:@"json-stream:%@", ResultsPath],
                            @"clean", @"analyze", @"test"
                            ];
     
-    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
-    configuration.rootPath = rootPath;
-    configuration.workspace = workspace;
-    configuration.scheme = scheme;
-    
-    [[self.mockTask expect] setCurrentDirectoryPath:rootPath];
+    [[self.mockTask expect] setCurrentDirectoryPath:RootPath];
     [[self.mockTask expect] setLaunchPath:XctoolPath];
     [[self.mockTask expect] setArguments:arguments];
     [[self.mockTask expect] launch];
     
-    [self.integrator integrateConfiguration:configuration completionHandler:nil];
+    [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:nil];
     
     [self.mockTask verify];
 }
 
 - (void)testIntegrateConfiguration_launchesBuildTask_doesNotCallCompletionHandlerIfTaskDoesNotComplete {
     
-    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
-    configuration.rootPath = @"/root/path";
-    configuration.workspace = @"workspace";
-    configuration.scheme = @"scheme";
-    
-    [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+    [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:^(FLTIntegrationReport *report) {
         
         [self signalCompletion];
     }];
@@ -93,11 +92,6 @@ static NSString *XctoolPath = @"/path/to/xctool";
 
 - (void)testIntegrateConfiguration_launchesBuildTask_callsCompletionHandlerWhenTaskCompletes {
     
-    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
-    configuration.rootPath = @"/root/path";
-    configuration.workspace = @"workspace";
-    configuration.scheme = @"scheme";
-    
     __block void (^terminationHandler)(NSTask *);
     [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
         void (^block)(NSTask *);
@@ -105,7 +99,7 @@ static NSString *XctoolPath = @"/path/to/xctool";
         terminationHandler = block;
     }] setTerminationHandler:[OCMArg any]];
     
-    [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+    [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:^(FLTIntegrationReport *report) {
         
         [self signalCompletion];
     }];
@@ -116,11 +110,6 @@ static NSString *XctoolPath = @"/path/to/xctool";
 
 - (void)testIntegrateConfiguration_buildFails_reportsFailure {
     
-    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
-    configuration.rootPath = @"/root/path";
-    configuration.workspace = @"workspace";
-    configuration.scheme = @"scheme";
-    
     __block void (^terminationHandler)(NSTask *);
     [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
         void (^block)(NSTask *);
@@ -128,7 +117,7 @@ static NSString *XctoolPath = @"/path/to/xctool";
         terminationHandler = block;
     }] setTerminationHandler:[OCMArg any]];
     
-    [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+    [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:^(FLTIntegrationReport *report) {
         
         XCTAssertEqual(FLTIntegrationReportStatusFailure, report.status, @"Expected report with failure status.");
         

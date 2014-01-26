@@ -4,6 +4,7 @@
 
 @interface FLTIntegratorConfiguration : NSObject
 
+@property (nonatomic, copy) NSString *resultsPath;
 @property (nonatomic, copy) NSString *rootPath;
 @property (nonatomic, copy) NSString *workspace;
 @property (nonatomic, copy) NSString *scheme;

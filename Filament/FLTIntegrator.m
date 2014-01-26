@@ -32,8 +32,6 @@
 
 - (void)launchBuildWithConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
     
-    NSString *jsonStreamOutput = @"build.json";
-
     NSTask *task = [self.taskFactory task];
     [task setCurrentDirectoryPath:configuration.rootPath];
     [task setLaunchPath:self.xctoolPath];
@@ -41,7 +39,7 @@
                          @"-workspace", configuration.workspace,
                          @"-scheme", configuration.scheme,
                          @"-sdk", @"iphonesimulator",
-                         @"-reporter", [NSString stringWithFormat:@"json-stream:%@", jsonStreamOutput],
+                         @"-reporter", [NSString stringWithFormat:@"json-stream:%@", configuration.resultsPath],
                          @"clean", @"analyze", @"test"
                          ]];
     task.terminationHandler = ^(NSTask *task) {
