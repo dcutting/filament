@@ -23,7 +23,8 @@
 
     NSLog(@"Started integration");
     [integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
-        NSLog(@"Completed integration: %@", FLTIntegrationReportStatusSuccess == report.status ? @"success" : @"FAILURE");
+        NSLog(@"Completed integration:");
+        NSLog(@"%@", report);
     }];
 }
 
