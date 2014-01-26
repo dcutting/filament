@@ -133,6 +133,31 @@ static NSString *Scheme = @"MyScheme";
     [self.mockIntegrationReportGenerator verify];
 }
 
+- (void)testIntegrateConfiguration_buildTaskCompletes_completionHandlerGivenGeneratedReport {
+    
+    __block void (^terminationHandler)(NSTask *);
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
+    
+    FLTIntegrationReport *dummyReport = [FLTIntegrationReport new];
+
+    [[[self.mockIntegrationReportGenerator stub] andReturn:dummyReport] reportWithBuildOutput:[OCMArg any]];
+    
+    [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:^(FLTIntegrationReport *report) {
+        
+        XCTAssertEqualObjects(dummyReport, report, @"Completion handler was not given generated report.");
+        
+        [self signalCompletion];
+    }];
+    
+    terminationHandler(self.mockTask);
+    
+    [self.mockIntegrationReportGenerator verify];
+}
+
 - (void)signalCompletion {
     
     self.didCompleteAsync = YES;

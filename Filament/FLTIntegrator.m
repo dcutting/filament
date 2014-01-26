@@ -35,6 +35,7 @@
 - (void)launchBuildWithConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
     
     NSTask *task = [self.taskFactory task];
+    
     [task setCurrentDirectoryPath:configuration.rootPath];
     [task setLaunchPath:self.xctoolPath];
     [task setArguments:@[
@@ -45,9 +46,9 @@
                          @"clean", @"analyze", @"test"
                          ]];
     task.terminationHandler = ^(NSTask *task) {
-
         [self processBuildResultsAtPath:configuration.resultsPath completionHandler:completionHandler];
     };
+    
     [task launch];
 }
 
@@ -55,9 +56,9 @@
     
     NSString *output = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     
-    [self.integrationReportGenerator reportWithBuildOutput:output];
+    FLTIntegrationReport *report = [self.integrationReportGenerator reportWithBuildOutput:output];
     
-    [self callCompletionHandler:completionHandler integrationReport:nil];
+    [self callCompletionHandler:completionHandler integrationReport:report];
 }
 
 - (void) callCompletionHandler:(FLTIntegratorCompletionHandler)completionHandler integrationReport:(FLTIntegrationReport *)report {
