@@ -70,7 +70,7 @@ static NSString *Scheme = @"MyScheme";
                            @"-scheme", Scheme,
                            @"-sdk", @"iphonesimulator",
                            @"-reporter", [NSString stringWithFormat:@"json-stream:%@", ResultsPath],
-                           @"clean", @"build", @"analyze", @"test"
+                           @"clean", @"build"
                            ];
     
     [[self.mockTask expect] setCurrentDirectoryPath:RootPath];
