@@ -18,7 +18,18 @@
     
     FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
     
-    [self assertReport:report hasStatus:FLTIntegrationReportStatusFailure];
+    [self assertReport:report hasStatus:FLTIntegrationReportStatusFailureErrors];
+}
+
+- (void)testReportWithBuildOutput_warnings_failure {
+    
+    NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithWarnings.json"];
+    
+    FLTIntegrationReportGenerator *generator = [FLTIntegrationReportGenerator new];
+    
+    FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
+    
+    [self assertReport:report hasStatus:FLTIntegrationReportStatusFailureWarnings];
 }
 
 - (void)testReportWithBuildOutput_normal_success {

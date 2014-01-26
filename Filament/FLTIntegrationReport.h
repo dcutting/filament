@@ -5,7 +5,8 @@
 typedef NS_ENUM(NSInteger, FLTIntegrationReportStatus) {
     
     FLTIntegrationReportStatusSuccess,
-    FLTIntegrationReportStatusFailure
+    FLTIntegrationReportStatusFailureWarnings,
+    FLTIntegrationReportStatusFailureErrors
 };
 
 @interface FLTIntegrationReport : NSObject

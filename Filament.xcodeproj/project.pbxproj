@@ -31,6 +31,7 @@
 		C8FF3D0518951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3D0418951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m */; };
 		C8FF3D081895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json in Resources */ = {isa = PBXBuildFile; fileRef = C8FF3D071895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json */; };
 		C8FF3D0A1895226800DF9ABE /* BuildOutputNormal.json in Resources */ = {isa = PBXBuildFile; fileRef = C8FF3D091895226800DF9ABE /* BuildOutputNormal.json */; };
+		C8FF3D0C1895237600DF9ABE /* BuildOutputWithWarnings.json in Resources */ = {isa = PBXBuildFile; fileRef = C8FF3D0B1895237600DF9ABE /* BuildOutputWithWarnings.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		C8FF3D0418951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrationReportGeneratorTests.m; sourceTree = "<group>"; };
 		C8FF3D071895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BuildOutputWithErrorsAndWarnings.json; sourceTree = "<group>"; };
 		C8FF3D091895226800DF9ABE /* BuildOutputNormal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BuildOutputNormal.json; sourceTree = "<group>"; };
+		C8FF3D0B1895237600DF9ABE /* BuildOutputWithWarnings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BuildOutputWithWarnings.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +216,7 @@
 			children = (
 				C8FF3D091895226800DF9ABE /* BuildOutputNormal.json */,
 				C8FF3D071895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json */,
+				C8FF3D0B1895237600DF9ABE /* BuildOutputWithWarnings.json */,
 			);
 			path = TestData;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 			files = (
 				C85E8E22189435CA00C4C48F /* InfoPlist.strings in Resources */,
 				C8FF3D081895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json in Resources */,
+				C8FF3D0C1895237600DF9ABE /* BuildOutputWithWarnings.json in Resources */,
 				C8FF3D0A1895226800DF9ABE /* BuildOutputNormal.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

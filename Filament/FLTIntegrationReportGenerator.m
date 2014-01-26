@@ -8,6 +8,10 @@
 
     __block FLTIntegrationReportStatus status = FLTIntegrationReportStatusSuccess;
     
+    __block NSInteger numberOfWarnings = 0;
+    
+    __block NSInteger numberOfErrors = 0;
+    
     NSArray *lines = [buildOutput componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
     [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
@@ -18,12 +22,20 @@
 
         NSNumber *errorNumber = jsonLine[@"totalNumberOfErrors"];
         NSInteger errors = [errorNumber integerValue];
+        numberOfErrors += errors;
+        
+        NSNumber *warningsNumber = jsonLine[@"totalNumberOfWarnings"];
+        NSInteger warnings = [warningsNumber integerValue];
+        numberOfWarnings += warnings;
 
-        if (errors > 0) {
-            status = FLTIntegrationReportStatusFailure;
-        }
     }];
-    
+
+    if (numberOfErrors > 0) {
+        status = FLTIntegrationReportStatusFailureErrors;
+    } else if (numberOfWarnings > 0) {
+        status = FLTIntegrationReportStatusFailureWarnings;
+    }
+
     FLTIntegrationReport *report = [FLTIntegrationReport new];
     report.status = status;
     
