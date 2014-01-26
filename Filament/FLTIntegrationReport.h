@@ -12,5 +12,6 @@ typedef NS_ENUM(NSInteger, FLTIntegrationReportStatus) {
 @interface FLTIntegrationReport : NSObject
 
 @property (nonatomic, assign) FLTIntegrationReportStatus status;
+@property (nonatomic, assign) NSInteger numberOfErrors;
 
 @end

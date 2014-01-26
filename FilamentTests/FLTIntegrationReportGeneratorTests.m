@@ -10,6 +10,17 @@
 
 @implementation FLTIntegrationReportGeneratorTests
 
+- (void)testReportWithBuildOutput_validBuildOutput_nonNilReport {
+    
+    NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputNormal.json"];
+    
+    FLTIntegrationReportGenerator *generator = [FLTIntegrationReportGenerator new];
+    
+    FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
+    
+    XCTAssertNotNil(report, @"Expected non-nil report.");
+}
+
 - (void)testReportWithBuildOutput_errors_failure {
     
     NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithErrorsAndWarnings.json"];
@@ -18,7 +29,22 @@
     
     FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
     
-    [self assertReport:report hasStatus:FLTIntegrationReportStatusFailureErrors];
+    FLTIntegrationReportStatus expectedStatus = FLTIntegrationReportStatusFailureErrors;
+    
+    XCTAssertEqual(expectedStatus, report.status, @"Expected %ld but got %ld for report status.", expectedStatus, report.status);
+}
+
+- (void)testReportWithBuildOutput_errors_reportContainsNumberOfErrors {
+    
+    NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithErrorsAndWarnings.json"];
+    
+    FLTIntegrationReportGenerator *generator = [FLTIntegrationReportGenerator new];
+    
+    FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
+    
+    FLTIntegrationReportStatus expectedErrors = 2;
+    
+    XCTAssertEqual(expectedErrors, report.numberOfErrors, @"Expected %ld but got %ld for number of errors.", expectedErrors, (long)report.numberOfErrors);
 }
 
 - (void)testReportWithBuildOutput_warnings_failure {
@@ -29,7 +55,9 @@
     
     FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
     
-    [self assertReport:report hasStatus:FLTIntegrationReportStatusFailureWarnings];
+    FLTIntegrationReportStatus expectedStatus = FLTIntegrationReportStatusFailureWarnings;
+    
+    XCTAssertEqual(expectedStatus, report.status, @"Expected %ld but got %ld for report status.", expectedStatus, report.status);
 }
 
 - (void)testReportWithBuildOutput_normal_success {
@@ -40,7 +68,9 @@
     
     FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
     
-    [self assertReport:report hasStatus:FLTIntegrationReportStatusSuccess];
+    FLTIntegrationReportStatus expectedStatus = FLTIntegrationReportStatusSuccess;
+    
+    XCTAssertEqual(expectedStatus, report.status, @"Expected %ld but got %ld for report status.", expectedStatus, report.status);
 }
 
 - (NSString *)sampleBuildOutputWithName:(NSString *)buildOutputName {
@@ -50,13 +80,6 @@
     NSString *path = [bundle pathForResource:buildOutputName ofType:nil];
     
     return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-}
-
-- (void)assertReport:(FLTIntegrationReport *)report hasStatus:(FLTIntegrationReportStatus)status {
-    
-    XCTAssertNotNil(report, @"Expected non-nil report.");
-    
-    XCTAssertEqual(status, report.status, @"Expected %ld but got %ld for report status.", status, report.status);
 }
 
 @end
