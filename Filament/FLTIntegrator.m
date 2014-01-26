@@ -24,13 +24,15 @@
 - (void)integrateConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
 
     if (configuration) {
-        [self launchBuild:configuration completionHandler:completionHandler];
+        [self launchBuildWithConfiguration:configuration completionHandler:completionHandler];
     } else {
-        [self callCompletionHandler:completionHandler];
+        [self callCompletionHandler:completionHandler integrationReport:nil];
     }
 }
 
-- (void)launchBuild:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
+- (void)launchBuildWithConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
+    
+    NSString *jsonStreamOutput = @"build.json";
 
     NSTask *task = [self.taskFactory task];
     [task setCurrentDirectoryPath:configuration.rootPath];
@@ -39,19 +41,23 @@
                          @"-workspace", configuration.workspace,
                          @"-scheme", configuration.scheme,
                          @"-sdk", @"iphonesimulator",
-                         @"-reporter", @"json-stream",
+                         @"-reporter", [NSString stringWithFormat:@"json-stream:%@", jsonStreamOutput],
                          @"clean", @"analyze", @"test"
                          ]];
     task.terminationHandler = ^(NSTask *task) {
-        [self callCompletionHandler:completionHandler];
+
+        FLTIntegrationReport *report = [FLTIntegrationReport new];
+        report.status = FLTIntegrationReportStatusFailure;
+
+        [self callCompletionHandler:completionHandler integrationReport:report];
     };
     [task launch];
 }
 
-- (void) callCompletionHandler:(FLTIntegratorCompletionHandler)completionHandler {
+- (void) callCompletionHandler:(FLTIntegratorCompletionHandler)completionHandler integrationReport:(FLTIntegrationReport *)report {
     
     if (completionHandler) {
-        completionHandler(nil);
+        completionHandler(report);
     }
 }
 

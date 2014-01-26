@@ -39,7 +39,7 @@ static NSString *XctoolPath = @"/path/to/xctool";
     
     [self.integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
         
-        XCTAssertNil(report, @"");
+        XCTAssertNil(report, @"Expected nil report.");
 
         [self signalCompletion];
     }];
@@ -53,7 +53,13 @@ static NSString *XctoolPath = @"/path/to/xctool";
     NSString *workspace = @"MyWorkspace.xcworkspace";
     NSString *scheme = @"MyScheme";
     
-    NSArray *arguments = @[@"-workspace", workspace, @"-scheme", scheme, @"-sdk", @"iphonesimulator", @"-reporter", @"json-stream", @"clean", @"analyze", @"test"];
+    NSArray *arguments = @[
+                           @"-workspace", workspace,
+                           @"-scheme", scheme,
+                           @"-sdk", @"iphonesimulator",
+                           @"-reporter", @"json-stream:build.json",
+                           @"clean", @"analyze", @"test"
+                           ];
     
     FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
     configuration.rootPath = rootPath;
@@ -100,6 +106,31 @@ static NSString *XctoolPath = @"/path/to/xctool";
     }] setTerminationHandler:[OCMArg any]];
     
     [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+        
+        [self signalCompletion];
+    }];
+    
+    terminationHandler(self.mockTask);
+    [self assertCompletion];
+}
+
+- (void)testIntegrateConfiguration_buildFails_reportsFailure {
+    
+    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
+    configuration.rootPath = @"/root/path";
+    configuration.workspace = @"workspace";
+    configuration.scheme = @"scheme";
+    
+    __block void (^terminationHandler)(NSTask *);
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
+    
+    [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+        
+        XCTAssertEqual(FLTIntegrationReportStatusFailure, report.status, @"Expected report with failure status.");
         
         [self signalCompletion];
     }];
