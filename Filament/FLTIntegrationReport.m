@@ -5,8 +5,15 @@
 @implementation FLTIntegrationReport
 
 - (NSString *)description {
+
+    NSString *statusDescription = [self descriptionForStatus];
     
-    return @"Success: 0 errors, 0 warnings";
+    return [NSString stringWithFormat:@"%@: %ld errors, 0 warnings", statusDescription, self.numberOfErrors];
+}
+
+- (NSString *)descriptionForStatus {
+    
+    return FLTIntegrationReportStatusSuccess == self.status ? @"Success" : @"FAILURE";
 }
 
 @end

@@ -10,7 +10,7 @@
 
 @implementation FLTIntegrationReportTests
 
-- (void)testDescription {
+- (void)testDescription_success {
     
     FLTIntegrationReport *report = [FLTIntegrationReport new];
     report.status = FLTIntegrationReportStatusSuccess;
@@ -20,6 +20,19 @@
     NSString *expectedDescription = @"Success: 0 errors, 0 warnings";
     NSString *actualDescription = [report description];
 
+    XCTAssertEqualObjects(expectedDescription, actualDescription, @"Expected '%@' but got '%@' for description.", expectedDescription, actualDescription);
+}
+
+- (void)testDescription_failureWithErrors {
+    
+    FLTIntegrationReport *report = [FLTIntegrationReport new];
+    report.status = FLTIntegrationReportStatusFailureErrors;
+    report.numberOfErrors = 4;
+    report.numberOfWarnings = 0;
+    
+    NSString *expectedDescription = @"FAILURE: 4 errors, 0 warnings";
+    NSString *actualDescription = [report description];
+    
     XCTAssertEqualObjects(expectedDescription, actualDescription, @"Expected '%@' but got '%@' for description.", expectedDescription, actualDescription);
 }
 
