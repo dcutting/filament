@@ -23,19 +23,25 @@
 
 - (void)integrateConfiguration:(FLTIntegratorConfiguration *)configuration completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
 
-    if (configuration) {
-        NSTask *task = [self.taskFactory task];
-        [task setCurrentDirectoryPath:configuration.rootPath];
-        [task setLaunchPath:self.xctoolPath];
-        [task setArguments:@[
-                             @"-workspace", configuration.workspace,
-                             @"-scheme", configuration.scheme,
-                             @"-sdk", @"iphonesimulator",
-                             @"-reporter", @"json-stream",
-                             @"clean", @"analyze", @"test"
-                             ]];
-        [task launch];
+    if (!configuration) {
+        [self callCompletionHandler:completionHandler];
+        return;
     }
+    
+    NSTask *task = [self.taskFactory task];
+    [task setCurrentDirectoryPath:configuration.rootPath];
+    [task setLaunchPath:self.xctoolPath];
+    [task setArguments:@[
+                         @"-workspace", configuration.workspace,
+                         @"-scheme", configuration.scheme,
+                         @"-sdk", @"iphonesimulator",
+                         @"-reporter", @"json-stream",
+                         @"clean", @"analyze", @"test"
+                         ]];
+    [task launch];
+}
+
+- (void) callCompletionHandler:(FLTIntegratorCompletionHandler)completionHandler {
     
     if (completionHandler) {
         completionHandler(nil);

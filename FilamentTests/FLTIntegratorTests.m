@@ -35,21 +35,6 @@ static NSString *XctoolPath = @"/path/to/xctool";
     self.didCompleteAsync = NO;
 }
 
-- (void)testIntegrateConfiguration_callsCompletionHandler {
-    
-    [self.integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
-        
-        [self signalCompletion];
-    }];
-    
-    [self assertCompletion];
-}
-
-- (void)testIntegrateConfiguration_doesNotCallNilCompletionHandler {
-   
-    [self.integrator integrateConfiguration:nil completionHandler:nil];
-}
-
 - (void)testIntegrateConfiguration_nilConfiguration_nilResult {
     
     [self.integrator integrateConfiguration:nil completionHandler:^(FLTIntegrationReport *report) {
@@ -85,6 +70,21 @@ static NSString *XctoolPath = @"/path/to/xctool";
     [self.mockTask verify];
 }
 
+- (void)testIntegrateConfiguration_launchesBuildTask_doesNotCallCompletionHandlerIfTaskDoesNotComplete {
+    
+    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
+    configuration.rootPath = @"/root/path";
+    configuration.workspace = @"workspace";
+    configuration.scheme = @"scheme";
+    
+    [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+        
+        [self signalCompletion];
+    }];
+    
+    [self assertNoCompletion];
+}
+
 - (void)signalCompletion {
     
     self.didCompleteAsync = YES;
@@ -95,6 +95,12 @@ static NSString *XctoolPath = @"/path/to/xctool";
     
     [self.asyncMonitor waitWithTimeout:AsyncTimeout];
     XCTAssertTrue(self.didCompleteAsync, @"");
+}
+
+- (void)assertNoCompletion {
+    
+    [self.asyncMonitor waitWithTimeout:AsyncTimeout];
+    XCTAssertFalse(self.didCompleteAsync, @"");
 }
 
 @end
