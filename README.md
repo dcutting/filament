@@ -2,6 +2,8 @@
 
 Simple continuous integration for iOS projects.
 
+**This is a work in progress and is not ready for use.**
+
 ## Features
 
 * Big board display.
