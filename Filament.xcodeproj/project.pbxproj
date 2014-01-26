@@ -26,6 +26,7 @@
 		C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E3D1894425D00C4C48F /* FLTIntegrationReport.m */; };
 		C85E8E401894707F00C4C48F /* FLTIntegratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E3F1894707F00C4C48F /* FLTIntegratorTests.m */; };
 		C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E42189479A700C4C48F /* NSTaskFactory.m */; };
+		C8FF3D0018949D0F00DF9ABE /* NSTaskFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		C85E8E3F1894707F00C4C48F /* FLTIntegratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegratorTests.m; sourceTree = "<group>"; };
 		C85E8E41189479A700C4C48F /* NSTaskFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTaskFactory.h; sourceTree = "<group>"; };
 		C85E8E42189479A700C4C48F /* NSTaskFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskFactory.m; sourceTree = "<group>"; };
+		C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskFactoryTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			children = (
 				C85E8E2E1894397000C4C48F /* FLTIntegrationTests.m */,
 				C85E8E3F1894707F00C4C48F /* FLTIntegratorTests.m */,
+				C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */,
 				C85E8E1E189435CA00C4C48F /* Supporting Files */,
 			);
 			path = FilamentTests;
@@ -344,6 +347,7 @@
 			files = (
 				C85E8E2F1894397000C4C48F /* FLTIntegrationTests.m in Sources */,
 				C85E8E401894707F00C4C48F /* FLTIntegratorTests.m in Sources */,
+				C8FF3D0018949D0F00DF9ABE /* NSTaskFactoryTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,7 +5,8 @@
 @implementation NSTaskFactory
 
 - (NSTask *)task {
-    return nil;
+    
+    return [NSTask new];
 }
 
 @end
