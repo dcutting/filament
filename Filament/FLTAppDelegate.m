@@ -8,21 +8,18 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    NSURL *gitURL = [NSURL URLWithString:@"/Users/dcutting/Code/Tests/BasicApp"];
-    NSString *branchName = @"master";
-    FLTRepository *repository = [[FLTRepository alloc] initWithGitURL:gitURL branchName:branchName];
+    NSString *xctoolPath = @"~/Code/3rdParty/xctool/xctool.sh";
 
-    FLTIntegrator *integrator = [FLTIntegrator new];
+    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
+    configuration.rootPath = @"~/Code/Tests/BasicApp";
+    configuration.workspace = @"BasicApp.xcworkspace";
+    configuration.scheme = @"BasicApp";
+
+    FLTIntegrator *integrator = [[FLTIntegrator alloc] initWithXctoolPath:xctoolPath taskFactory:[NSTaskFactory new]];
     
-    FLTIntegration *integration = [[FLTIntegration alloc] initWithIntegrator:integrator];
-    
-    NSLog(@"Beginning integration for %@", repository);
-    [integration integrateRepository:repository completionHandler:^(FLTIntegrationReport *report) {
-        if (FLTIntegrationReportStatusSuccess == report.status) {
-            NSLog(@"Success!");
-        } else {
-            NSLog(@"Failed integration.");
-        }
+    NSLog(@"Started integration");
+    [integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+        NSLog(@"Completed integration.");
     }];
 }
 
