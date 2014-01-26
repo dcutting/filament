@@ -54,12 +54,17 @@ static NSString *BranchName = @"mybranch";
         terminationHandler = block;
     }] setTerminationHandler:[OCMArg any]];
     
+    NSData *configurationData = [self sampleConfigurationData];
+    id mockData = [OCMockObject niceMockForClass:[NSData class]];
+    [[[[mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:[OCMArg any]];
+
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
         
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
+    terminationHandler(self.mockTask);  // Complete clone.
+    terminationHandler(self.mockTask);  // Complete checkout.
     
     [self assertCompletion];
 }
@@ -94,6 +99,53 @@ static NSString *BranchName = @"mybranch";
     terminationHandler(self.mockTask);
     
     [self.mockTask verify];
+}
+
+- (void)testCheckout_checkedOutBranch_returnsParsedConfigurationInCompletionHandler {
+
+    NSString *resultsPath = [NSString pathWithComponents:@[ ClonePath, @"build.json" ]];
+    NSString *rootPath = ClonePath;
+    NSString *workspace = @"MyWorkspace.xcworkspace";
+    NSString *scheme = @"MyScheme";
+    
+    NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
+    
+    __block void (^terminationHandler)(NSTask *);
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
+    
+    NSData *configurationData = [self sampleConfigurationData];
+    id mockData = [OCMockObject niceMockForClass:[NSData class]];
+    [[[[mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:configurationPath];
+
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+        
+        XCTAssertEqualObjects(resultsPath, configuration.resultsPath, @"Expected '%@' but got '%@' for results path.", resultsPath, configuration.resultsPath);
+        XCTAssertEqualObjects(rootPath, configuration.rootPath, @"Expected '%@' but got '%@' for root path.", rootPath, configuration.rootPath);
+        XCTAssertEqualObjects(workspace, configuration.workspace, @"Expected '%@' but got '%@' for workspace.", workspace, configuration.workspace);
+        XCTAssertEqualObjects(scheme, configuration.scheme, @"Expected '%@' but got '%@' for scheme.", scheme, configuration.scheme);
+
+        [self signalCompletion];
+    }];
+    
+    terminationHandler(self.mockTask);
+    terminationHandler(self.mockTask);
+    
+    [self.mockTask verify];
+    
+    [self assertCompletion];
+}
+
+- (NSData *)sampleConfigurationData {
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    NSString *path = [bundle pathForResource:@"ConfigurationFile.json" ofType:nil];
+    
+    return [NSData dataWithContentsOfFile:path];
 }
 
 - (void)signalCompletion {

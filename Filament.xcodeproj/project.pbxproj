@@ -34,6 +34,7 @@
 		C8FF3D0C1895237600DF9ABE /* BuildOutputWithWarnings.json in Resources */ = {isa = PBXBuildFile; fileRef = C8FF3D0B1895237600DF9ABE /* BuildOutputWithWarnings.json */; };
 		C8FF3D0E1895292C00DF9ABE /* FLTIntegrationReportTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3D0D1895292C00DF9ABE /* FLTIntegrationReportTests.m */; };
 		C8FF3D1018952CED00DF9ABE /* FLTRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3D0F18952CED00DF9ABE /* FLTRepositoryTests.m */; };
+		C8FF3D121895385D00DF9ABE /* ConfigurationFile.json in Resources */ = {isa = PBXBuildFile; fileRef = C8FF3D111895385D00DF9ABE /* ConfigurationFile.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		C8FF3D0B1895237600DF9ABE /* BuildOutputWithWarnings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BuildOutputWithWarnings.json; sourceTree = "<group>"; };
 		C8FF3D0D1895292C00DF9ABE /* FLTIntegrationReportTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrationReportTests.m; sourceTree = "<group>"; };
 		C8FF3D0F18952CED00DF9ABE /* FLTRepositoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTRepositoryTests.m; sourceTree = "<group>"; };
+		C8FF3D111895385D00DF9ABE /* ConfigurationFile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ConfigurationFile.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				C8FF3D091895226800DF9ABE /* BuildOutputNormal.json */,
 				C8FF3D071895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json */,
 				C8FF3D0B1895237600DF9ABE /* BuildOutputWithWarnings.json */,
+				C8FF3D111895385D00DF9ABE /* ConfigurationFile.json */,
 			);
 			path = TestData;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 			files = (
 				C85E8E22189435CA00C4C48F /* InfoPlist.strings in Resources */,
 				C8FF3D081895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json in Resources */,
+				C8FF3D121895385D00DF9ABE /* ConfigurationFile.json in Resources */,
 				C8FF3D0C1895237600DF9ABE /* BuildOutputWithWarnings.json in Resources */,
 				C8FF3D0A1895226800DF9ABE /* BuildOutputNormal.json in Resources */,
 			);

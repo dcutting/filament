@@ -38,10 +38,28 @@
     [checkoutTask setCurrentDirectoryPath:clonePath];
     [checkoutTask setLaunchPath:self.gitPath];
     [checkoutTask setArguments:@[ @"checkout", branchName ]];
+    checkoutTask.terminationHandler = ^(NSTask *task) {
+        [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
+    };
     [checkoutTask launch];
+}
+
+- (void)parseConfigurationAtClonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
+    
+    NSString *configurationPath = [NSString pathWithComponents:@[ clonePath, @".filament" ]];
+
+    NSData *data = [NSData dataWithContentsOfFile:configurationPath];
+        
+    NSDictionary *jsonConfiguration = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+    
+    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
+    configuration.resultsPath = [NSString pathWithComponents:@[ clonePath, @"build.json" ]];
+    configuration.rootPath = clonePath;
+    configuration.workspace = jsonConfiguration[@"workspace"];
+    configuration.scheme = jsonConfiguration[@"scheme"];
     
     if (completionHandler) {
-        completionHandler(nil);
+        completionHandler(configuration);
     }
 }
 
