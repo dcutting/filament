@@ -21,7 +21,7 @@
     XCTAssertNotNil(report, @"Expected non-nil report.");
 }
 
-- (void)testReportWithBuildOutput_errors_failure {
+- (void)testReportWithBuildOutput_errorsAndWarnings_failure {
     
     NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithErrorsAndWarnings.json"];
     
@@ -34,7 +34,7 @@
     XCTAssertEqual(expectedStatus, report.status, @"Expected %ld but got %ld for report status.", expectedStatus, report.status);
 }
 
-- (void)testReportWithBuildOutput_errors_reportContainsNumberOfErrors {
+- (void)testReportWithBuildOutput_errorsAndWarnings_reportContainsNumberOfErrors {
     
     NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithErrorsAndWarnings.json"];
     
@@ -45,6 +45,19 @@
     FLTIntegrationReportStatus expectedErrors = 2;
     
     XCTAssertEqual(expectedErrors, report.numberOfErrors, @"Expected %ld but got %ld for number of errors.", expectedErrors, (long)report.numberOfErrors);
+}
+
+- (void)testReportWithBuildOutput_errorsAndWarnings_reportContainsNumberOfWarnings {
+    
+    NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithErrorsAndWarnings.json"];
+    
+    FLTIntegrationReportGenerator *generator = [FLTIntegrationReportGenerator new];
+    
+    FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
+    
+    FLTIntegrationReportStatus expectedWarnings = 1;
+    
+    XCTAssertEqual(expectedWarnings, report.numberOfWarnings, @"Expected %ld but got %ld for number of warnings.", expectedWarnings, (long)report.numberOfWarnings);
 }
 
 - (void)testReportWithBuildOutput_warnings_failure {

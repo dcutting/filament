@@ -13,5 +13,6 @@ typedef NS_ENUM(NSInteger, FLTIntegrationReportStatus) {
 
 @property (nonatomic, assign) FLTIntegrationReportStatus status;
 @property (nonatomic, assign) NSInteger numberOfErrors;
+@property (nonatomic, assign) NSInteger numberOfWarnings;
 
 @end

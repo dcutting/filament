@@ -39,6 +39,7 @@
     FLTIntegrationReport *report = [FLTIntegrationReport new];
     report.status = status;
     report.numberOfErrors = numberOfErrors;
+    report.numberOfWarnings = numberOfWarnings;
     
     return report;
 }
