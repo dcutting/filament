@@ -6,42 +6,59 @@
 
 - (FLTIntegrationReport *)reportWithBuildOutput:(NSString *)buildOutput {
 
-    __block FLTIntegrationReportStatus status = FLTIntegrationReportStatusSuccess;
-    
-    __block NSInteger numberOfWarnings = 0;
-    
     __block NSInteger numberOfErrors = 0;
+    __block NSInteger numberOfWarnings = 0;
     
     NSArray *lines = [buildOutput componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
     [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
 
-        NSData *data = [line dataUsingEncoding:NSUTF8StringEncoding];
-
-        NSDictionary *jsonLine = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-
-        NSNumber *errorNumber = jsonLine[@"totalNumberOfErrors"];
-        NSInteger errors = [errorNumber integerValue];
-        numberOfErrors += errors;
-        
-        NSNumber *warningsNumber = jsonLine[@"totalNumberOfWarnings"];
-        NSInteger warnings = [warningsNumber integerValue];
-        numberOfWarnings += warnings;
-
+        NSDictionary *jsonDictionary = [self jsonDictionaryForLine:line];
+        numberOfErrors += [self errorsForJsonDictionary:jsonDictionary];
+        numberOfWarnings += [self warningsForJsonDictionary:jsonDictionary];
     }];
 
-    if (numberOfErrors > 0) {
-        status = FLTIntegrationReportStatusFailureErrors;
-    } else if (numberOfWarnings > 0) {
-        status = FLTIntegrationReportStatusFailureWarnings;
-    }
+    return [self reportForNumberOfWarnings:numberOfWarnings numberOfErrors:numberOfErrors];
+}
 
+- (NSDictionary *)jsonDictionaryForLine:(NSString *)line {
+
+    NSData *data = [line dataUsingEncoding:NSUTF8StringEncoding];
+
+    return [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+}
+
+- (NSInteger)errorsForJsonDictionary:(NSDictionary *)jsonDictionary {
+    
+    return [jsonDictionary[@"totalNumberOfErrors"] integerValue];
+}
+
+- (NSInteger)warningsForJsonDictionary:(NSDictionary *)jsonDictionary {
+    
+    return [jsonDictionary[@"totalNumberOfWarnings"] integerValue];
+}
+
+- (FLTIntegrationReport *)reportForNumberOfWarnings:(NSInteger)numberOfWarnings numberOfErrors:(NSInteger)numberOfErrors {
+    
     FLTIntegrationReport *report = [FLTIntegrationReport new];
-    report.status = status;
     report.numberOfErrors = numberOfErrors;
     report.numberOfWarnings = numberOfWarnings;
     
+    [self updateStatusForIntegrationReport:report];
+    
     return report;
+}
+
+- (void)updateStatusForIntegrationReport:(FLTIntegrationReport *)report {
+
+    FLTIntegrationReportStatus status = FLTIntegrationReportStatusSuccess;
+    if (report.numberOfErrors > 0) {
+        status = FLTIntegrationReportStatusFailureErrors;
+    } else if (report.numberOfWarnings > 0) {
+        status = FLTIntegrationReportStatusFailureWarnings;
+    }
+    
+    report.status = status;
 }
 
 @end
