@@ -2,17 +2,35 @@
 
 #import "FLTRepository.h"
 
+@interface FLTRepository ()
+
+@property (nonatomic, copy) NSString *gitPath;
+@property (nonatomic, strong) NSTaskFactory *taskFactory;
+
+@end
+
 @implementation FLTRepository
 
-- (instancetype)initWithGitURL:(NSURL *)gitURL branchName:(NSString *)branchName {
-
+- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory {
+    
     self = [super init];
+    if (self) {
+        _gitPath = gitPath;
+        _taskFactory = taskFactory;
+    }
     return self;
 }
 
-- (void)checkoutWithCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler {
+- (void)checkoutGitURL:(NSURL *)gitURL branchName:(NSString *)branchName toPath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
     
-    completionHandler(nil);
+    NSTask *task = [self.taskFactory task];
+    [task setLaunchPath:self.gitPath];
+    [task setArguments:@[ @"clone", [gitURL absoluteString], clonePath ]];
+    [task launch];
+    
+    if (completionHandler) {
+        completionHandler(nil);
+    }
 }
 
 @end
