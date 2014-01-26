@@ -6,9 +6,26 @@
 
 - (FLTIntegrationReport *)reportWithBuildOutput:(NSString *)buildOutput {
 
-    FLTIntegrationReport *report = [FLTIntegrationReport new];
+    __block FLTIntegrationReportStatus status = FLTIntegrationReportStatusSuccess;
     
-    report.status = FLTIntegrationReportStatusFailure;
+    NSArray *lines = [buildOutput componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+
+    [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
+
+        NSData *data = [line dataUsingEncoding:NSUTF8StringEncoding];
+
+        NSDictionary *jsonLine = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+
+        NSNumber *errorNumber = jsonLine[@"totalNumberOfErrors"];
+        NSInteger errors = [errorNumber integerValue];
+
+        if (errors > 0) {
+            status = FLTIntegrationReportStatusFailure;
+        }
+    }];
+    
+    FLTIntegrationReport *report = [FLTIntegrationReport new];
+    report.status = status;
     
     return report;
 }

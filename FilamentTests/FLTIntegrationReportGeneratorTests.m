@@ -10,7 +10,7 @@
 
 @implementation FLTIntegrationReportGeneratorTests
 
-- (void)testReportWithBuildOutput_errors_failed {
+- (void)testReportWithBuildOutput_errors_failure {
     
     NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputWithErrorsAndWarnings.json"];
     
@@ -19,6 +19,17 @@
     FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
     
     [self assertReport:report hasStatus:FLTIntegrationReportStatusFailure];
+}
+
+- (void)testReportWithBuildOutput_normal_success {
+    
+    NSString *buildOutput = [self sampleBuildOutputWithName:@"BuildOutputNormal.json"];
+    
+    FLTIntegrationReportGenerator *generator = [FLTIntegrationReportGenerator new];
+    
+    FLTIntegrationReport *report = [generator reportWithBuildOutput:buildOutput];
+    
+    [self assertReport:report hasStatus:FLTIntegrationReportStatusSuccess];
 }
 
 - (NSString *)sampleBuildOutputWithName:(NSString *)buildOutputName {
