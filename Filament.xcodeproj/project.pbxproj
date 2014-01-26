@@ -28,6 +28,8 @@
 		C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E42189479A700C4C48F /* NSTaskFactory.m */; };
 		C8FF3D0018949D0F00DF9ABE /* NSTaskFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */; };
 		C8FF3D0318951A3700DF9ABE /* FLTIntegrationReportGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3D0218951A3700DF9ABE /* FLTIntegrationReportGenerator.m */; };
+		C8FF3D0518951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3D0418951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m */; };
+		C8FF3D081895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json in Resources */ = {isa = PBXBuildFile; fileRef = C8FF3D071895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskFactoryTests.m; sourceTree = "<group>"; };
 		C8FF3D0118951A3700DF9ABE /* FLTIntegrationReportGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTIntegrationReportGenerator.h; sourceTree = "<group>"; };
 		C8FF3D0218951A3700DF9ABE /* FLTIntegrationReportGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrationReportGenerator.m; sourceTree = "<group>"; };
+		C8FF3D0418951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegrationReportGeneratorTests.m; sourceTree = "<group>"; };
+		C8FF3D071895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BuildOutputWithErrorsAndWarnings.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,9 +188,11 @@
 		C85E8E1D189435CA00C4C48F /* FilamentTests */ = {
 			isa = PBXGroup;
 			children = (
+				C8FF3D0418951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m */,
 				C85E8E2E1894397000C4C48F /* FLTIntegrationTests.m */,
 				C85E8E3F1894707F00C4C48F /* FLTIntegratorTests.m */,
 				C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */,
+				C8FF3D061895208200DF9ABE /* TestData */,
 				C85E8E1E189435CA00C4C48F /* Supporting Files */,
 			);
 			path = FilamentTests;
@@ -199,6 +205,14 @@
 				C85E8E20189435CA00C4C48F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C8FF3D061895208200DF9ABE /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				C8FF3D071895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json */,
+			);
+			path = TestData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C85E8E22189435CA00C4C48F /* InfoPlist.strings in Resources */,
+				C8FF3D081895208200DF9ABE /* BuildOutputWithErrorsAndWarnings.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +369,7 @@
 				C85E8E2F1894397000C4C48F /* FLTIntegrationTests.m in Sources */,
 				C85E8E401894707F00C4C48F /* FLTIntegratorTests.m in Sources */,
 				C8FF3D0018949D0F00DF9ABE /* NSTaskFactoryTests.m in Sources */,
+				C8FF3D0518951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

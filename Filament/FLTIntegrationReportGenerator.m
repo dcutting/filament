@@ -6,7 +6,11 @@
 
 - (FLTIntegrationReport *)reportWithBuildOutput:(NSString *)buildOutput {
 
-    return nil;
+    FLTIntegrationReport *report = [FLTIntegrationReport new];
+    
+    report.status = FLTIntegrationReportStatusFailure;
+    
+    return report;
 }
 
 @end
