@@ -36,4 +36,17 @@
     XCTAssertEqualObjects(expectedDescription, actualDescription, @"Expected '%@' but got '%@' for description.", expectedDescription, actualDescription);
 }
 
+- (void)testDescription_failureWithWarnings {
+    
+    FLTIntegrationReport *report = [FLTIntegrationReport new];
+    report.status = FLTIntegrationReportStatusFailureWarnings;
+    report.numberOfErrors = 0;
+    report.numberOfWarnings = 3;
+    
+    NSString *expectedDescription = @"FAILURE: 0 errors, 3 warnings";
+    NSString *actualDescription = [report description];
+    
+    XCTAssertEqualObjects(expectedDescription, actualDescription, @"Expected '%@' but got '%@' for description.", expectedDescription, actualDescription);
+}
+
 @end

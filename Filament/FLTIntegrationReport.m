@@ -8,7 +8,7 @@
 
     NSString *statusDescription = [self descriptionForStatus];
     
-    return [NSString stringWithFormat:@"%@: %ld errors, 0 warnings", statusDescription, self.numberOfErrors];
+    return [NSString stringWithFormat:@"%@: %ld errors, %ld warnings", statusDescription, self.numberOfErrors, self.numberOfWarnings];
 }
 
 - (NSString *)descriptionForStatus {
