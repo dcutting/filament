@@ -43,7 +43,7 @@
                          @"-scheme", configuration.scheme,
                          @"-sdk", @"iphonesimulator",
                          @"-reporter", [NSString stringWithFormat:@"json-stream:%@", configuration.resultsPath],
-                         @"clean", @"analyze", @"test"
+                         @"clean", @"build", @"analyze", @"test"
                          ]];
     task.terminationHandler = ^(NSTask *task) {
         [self processBuildResultsAtPath:configuration.resultsPath completionHandler:completionHandler];
