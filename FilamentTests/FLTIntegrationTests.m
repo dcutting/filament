@@ -6,29 +6,60 @@
 
 #import "FLTIntegration.h"
 
+static NSString *BranchName = @"myBranch";
+static NSString *ToPath = @"/path/to/clone";
+
 @interface FLTIntegrationTests : XCTestCase
+
+@property (nonatomic, strong) FLTIntegration *integration;
+
+@property (nonatomic, strong) id mockRepository;
+@property (nonatomic, strong) id mockIntegrator;
+
+@property (nonatomic, strong) NSURL *gitURL;
 
 @end
 
 @implementation FLTIntegrationTests
 
+- (void)setUp {
+    
+    self.mockRepository = [OCMockObject niceMockForClass:[FLTRepository class]];
+    
+    self.mockIntegrator = [OCMockObject niceMockForClass:[FLTIntegrator class]];
+    
+    self.integration = [[FLTIntegration alloc] initWithIntegrator:self.mockIntegrator];
+
+    self.gitURL = [NSURL URLWithString:@"/path/to/git/repo"];
+}
+
 - (void)testIntegrate_checksOutRepository {
     
-    id mockIntegrator = [OCMockObject niceMockForClass:[FLTIntegrator class]];
+    [[self.mockRepository expect] checkoutGitURL:self.gitURL branchName:BranchName toPath:ToPath completionHandler:[OCMArg any]];
     
-    FLTIntegration *integration = [[FLTIntegration alloc] initWithIntegrator:mockIntegrator];
+    [self.integration integrateGitURL:self.gitURL branchName:BranchName toPath:ToPath repository:self.mockRepository completionHandler:nil];
     
-    id mockRepository = [OCMockObject niceMockForClass:[FLTRepository class]];
+    [self.mockRepository verify];
+}
+
+- (void)testIntegrate_afterCheckout_integratesWithConfiguration {
     
-    NSURL *gitURL = [NSURL URLWithString:@"/path/to/git/repo"];
-    NSString *branchName = @"myBranch";
-    NSString *toPath = @"/path/to/clone";
+    __block FLTRepositoryCompletionHandler completionHandler;
+    [[[self.mockRepository stub] andDo:^(NSInvocation *invocation) {
+        FLTRepositoryCompletionHandler block;
+        [invocation getArgument:&block atIndex:5];
+        completionHandler = block;
+    }] checkoutGitURL:self.gitURL branchName:BranchName toPath:ToPath completionHandler:[OCMArg any]];
     
-    [[mockRepository expect] checkoutGitURL:gitURL branchName:branchName toPath:toPath completionHandler:[OCMArg any]];
+    [self.integration integrateGitURL:self.gitURL branchName:BranchName toPath:ToPath repository:self.mockRepository completionHandler:nil];
     
-    [integration integrateGitURL:gitURL branchName:branchName toPath:toPath repository:mockRepository completionHandler:nil];
+    FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
+
+    [[self.mockIntegrator expect] integrateConfiguration:configuration completionHandler:nil];
     
-    [mockRepository verify];
+    completionHandler(configuration);
+    
+    [self.mockIntegrator verify];
 }
 
 @end
