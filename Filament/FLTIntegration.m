@@ -10,7 +10,9 @@
     return self;
 }
 
-- (void)integrateRepository:(FLTRepository *)repository completionHandler:(FLTIntegrationCompletionHandler)completionHandler {
+- (void)integrateGitURL:(NSURL *)gitURL branchName:(NSString *)branchName toPath:(NSString *)toPath repository:(FLTRepository *)repository completionHandler:(FLTIntegrationCompletionHandler)completionHandler {
+    
+    [repository checkoutGitURL:gitURL branchName:branchName toPath:toPath completionHandler:nil];
 }
 
 @end

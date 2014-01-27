@@ -10,6 +10,6 @@ typedef void(^FLTIntegrationCompletionHandler)(FLTIntegrationReport *);
 @interface FLTIntegration : NSObject
 
 - (instancetype)initWithIntegrator:(FLTIntegrator *)integrator;
-- (void)integrateRepository:(FLTRepository *)repository completionHandler:(FLTIntegrationCompletionHandler)completionHandler;
+- (void)integrateGitURL:(NSURL *)gitURL branchName:(NSString *)branchName toPath:(NSString *)toPath repository:(FLTRepository *)repository completionHandler:(FLTIntegrationCompletionHandler)completionHandler;
 
 @end
