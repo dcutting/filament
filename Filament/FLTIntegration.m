@@ -24,7 +24,10 @@
     
     [repository checkoutGitURL:gitURL branchName:branchName toPath:toPath completionHandler:^(FLTIntegratorConfiguration *configuration) {
         
-        [self.integrator integrateConfiguration:configuration completionHandler:nil];
+        [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
+            
+            completionHandler(report);
+        }];
     }];
 }
 
