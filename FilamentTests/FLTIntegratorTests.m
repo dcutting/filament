@@ -1,13 +1,9 @@
 //  Copyright (c) 2014 Yellowbek Ltd. All rights reserved.
 
-#import <XCTest/XCTest.h>
-
 #import <OCMock/OCMock.h>
-#import <TRVSMonitor/TRVSMonitor.h>
 
+#import "FLTAsyncXCTestCase.h"
 #import "FLTIntegration.h"
-
-static NSTimeInterval AsyncTimeout = 1.0f;
 
 static NSString *XctoolPath = @"/path/to/xctool";
 
@@ -16,7 +12,7 @@ static NSString *RootPath = @"/the/root/path";
 static NSString *Workspace = @"MyWorkspace.xcworkspace";
 static NSString *Scheme = @"MyScheme";
 
-@interface FLTIntegratorTests : XCTestCase
+@interface FLTIntegratorTests : FLTAsyncXCTestCase
 
 @property (nonatomic, strong) FLTIntegrator *integrator;
 @property (nonatomic, strong) id mockTaskFactory;
@@ -24,14 +20,13 @@ static NSString *Scheme = @"MyScheme";
 @property (nonatomic, strong) id mockIntegrationReportGenerator;
 @property (nonatomic, strong) FLTIntegratorConfiguration *dummyConfiguration;
 
-@property (nonatomic, strong) TRVSMonitor *asyncMonitor;
-@property (nonatomic, assign) BOOL didCompleteAsync;
-
 @end
 
 @implementation FLTIntegratorTests
 
 - (void)setUp {
+    
+    [super setUp];
     
     self.mockTaskFactory = [OCMockObject niceMockForClass:[NSTaskFactory class]];
     self.mockTask = [OCMockObject niceMockForClass:[NSTask class]];
@@ -46,9 +41,6 @@ static NSString *Scheme = @"MyScheme";
     self.dummyConfiguration.rootPath = RootPath;
     self.dummyConfiguration.workspace = Workspace;
     self.dummyConfiguration.scheme = Scheme;
-    
-    self.asyncMonitor = [TRVSMonitor monitor];
-    self.didCompleteAsync = NO;
 }
 
 - (void)testIntegrateConfiguration_nilConfiguration_nilResult {
@@ -156,24 +148,6 @@ static NSString *Scheme = @"MyScheme";
     terminationHandler(self.mockTask);
     
     [self.mockIntegrationReportGenerator verify];
-}
-
-- (void)signalCompletion {
-    
-    self.didCompleteAsync = YES;
-    [self.asyncMonitor signal];
-}
-
-- (void)assertCompletion {
-    
-    [self.asyncMonitor waitWithTimeout:AsyncTimeout];
-    XCTAssertTrue(self.didCompleteAsync, @"");
-}
-
-- (void)assertNoCompletion {
-    
-    [self.asyncMonitor waitWithTimeout:AsyncTimeout];
-    XCTAssertFalse(self.didCompleteAsync, @"");
 }
 
 @end

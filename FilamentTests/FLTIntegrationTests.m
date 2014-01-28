@@ -1,15 +1,14 @@
 //  Copyright (c) 2014 Yellowbek Ltd. All rights reserved.
 
-#import <XCTest/XCTest.h>
-
 #import <OCMock/OCMock.h>
 
+#import "FLTAsyncXCTestCase.h"
 #import "FLTIntegration.h"
 
 static NSString *BranchName = @"myBranch";
 static NSString *ToPath = @"/path/to/clone";
 
-@interface FLTIntegrationTests : XCTestCase
+@interface FLTIntegrationTests : FLTAsyncXCTestCase
 
 @property (nonatomic, strong) FLTIntegration *integration;
 
@@ -23,6 +22,8 @@ static NSString *ToPath = @"/path/to/clone";
 @implementation FLTIntegrationTests
 
 - (void)setUp {
+    
+    [super setUp];
     
     self.mockRepository = [OCMockObject niceMockForClass:[FLTRepository class]];
     
