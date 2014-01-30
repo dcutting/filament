@@ -55,8 +55,7 @@ static NSString *BranchName = @"mybranch";
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);  // Complete clone.
-    terminationHandler(self.mockTask);  // Complete checkout.
+    terminationHandler(self.mockTask);
     
     [self assertCompletion];
 }
@@ -64,31 +63,10 @@ static NSString *BranchName = @"mybranch";
 - (void)testCheckout_launchesGitCloneTask {
     
     [[self.mockTask expect] setLaunchPath:GitPath];
-    [[self.mockTask expect] setArguments:@[ @"clone", GitURLString, ClonePath ]];
+    [[self.mockTask expect] setArguments:@[ @"clone", @"--branch", BranchName, GitURLString, ClonePath ]];
     [[self.mockTask expect] launch];
     
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:nil];
-    
-    [self.mockTask verify];
-}
-
-- (void)testCheckout_checksOutSpecifiedBranch {
-    
-    __block void (^terminationHandler)(NSTask *);
-    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
-        void (^block)(NSTask *);
-        [invocation getArgument:&block atIndex:2];
-        terminationHandler = block;
-    }] setTerminationHandler:[OCMArg any]];
-
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:nil];
-    
-    [[self.mockTask expect] setLaunchPath:GitPath];
-    [[self.mockTask expect] setCurrentDirectoryPath:ClonePath];
-    [[self.mockTask expect] setArguments:@[ @"checkout", BranchName ]];
-    [[self.mockTask expect] launch];
-    
-    terminationHandler(self.mockTask);
     
     [self.mockTask verify];
 }
@@ -123,7 +101,6 @@ static NSString *BranchName = @"mybranch";
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
     terminationHandler(self.mockTask);
     
     [self.mockTask verify];

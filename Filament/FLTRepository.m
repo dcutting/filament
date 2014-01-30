@@ -25,23 +25,16 @@
     
     NSTask *cloneTask = [self.taskFactory task];
     [cloneTask setLaunchPath:self.gitPath];
-    [cloneTask setArguments:@[ @"clone", [gitURL absoluteString], clonePath ]];
+    [cloneTask setArguments:@[
+                              @"clone",
+                              @"--branch", branchName,
+                              [gitURL absoluteString],
+                              clonePath
+                              ]];
     cloneTask.terminationHandler = ^(NSTask *task) {
-        [self checkoutBranch:branchName atPath:clonePath completionHandler:completionHandler];
-    };
-    [cloneTask launch];
-}
-
-- (void)checkoutBranch:(NSString *)branchName atPath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
-
-    NSTask *checkoutTask = [self.taskFactory task];
-    [checkoutTask setCurrentDirectoryPath:clonePath];
-    [checkoutTask setLaunchPath:self.gitPath];
-    [checkoutTask setArguments:@[ @"checkout", branchName ]];
-    checkoutTask.terminationHandler = ^(NSTask *task) {
         [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
     };
-    [checkoutTask launch];
+    [cloneTask launch];
 }
 
 - (void)parseConfigurationAtClonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
