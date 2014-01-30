@@ -23,7 +23,7 @@
     NSString *gitPath = @"/usr/local/bin/git";
     FLTRepository *repository = [[FLTRepository alloc] initWithGitPath:gitPath taskFactory:[NSTaskFactory new]];
 
-    NSLog(@"Started checkout");
+    NSLog(@"Started integration...");
 
     [integration integrateGitURL:gitURL branchName:branchName toPath:clonePath repository:repository completionHandler:^(FLTIntegrationReport *report) {
 
