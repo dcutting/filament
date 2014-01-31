@@ -109,6 +109,45 @@ static NSString *BranchName = @"mybranch";
     [self assertCompletion];
 }
 
+- (void)testCheckout_missingConfiguration_returnsNilConfigurationInCompletionHandler {
+    
+    id mockData = [OCMockObject niceMockForClass:[NSData class]];
+    [[[[mockData stub] andReturn:nil] classMethod] dataWithContentsOfFile:[OCMArg any]];
+    
+    void (^terminationHandler)(NSTask *);
+    [self captureTerminationHandler:&terminationHandler];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        
+        [self signalCompletion];
+    }];
+    
+    terminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+//- (void)testCheckout_failed_returnsNilConfigurationInCompletionHandler {
+//    
+//    void (^terminationHandler)(NSTask *);
+//    [self captureTerminationHandler:&terminationHandler];
+//
+//    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
+//    
+//    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+//        
+//        XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
+//        
+//        [self signalCompletion];
+//    }];
+//    
+//    terminationHandler(self.mockTask);
+//
+//    [self assertCompletion];
+//}
+
 - (NSData *)sampleConfigurationData {
     
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
