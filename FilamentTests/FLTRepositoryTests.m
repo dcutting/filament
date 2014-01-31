@@ -39,12 +39,8 @@ static NSString *BranchName = @"mybranch";
 
 - (void)testCheckout_doesComplete {
     
-    __block void (^terminationHandler)(NSTask *);
-    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
-        void (^block)(NSTask *);
-        [invocation getArgument:&block atIndex:2];
-        terminationHandler = block;
-    }] setTerminationHandler:[OCMArg any]];
+    void (^terminationHandler)(NSTask *);
+    [self captureTerminationHandler:&terminationHandler];
     
     NSData *configurationData = [self sampleConfigurationData];
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
@@ -58,6 +54,15 @@ static NSString *BranchName = @"mybranch";
     terminationHandler(self.mockTask);
     
     [self assertCompletion];
+}
+
+- (void)captureTerminationHandler:(void (^ __strong *)(NSTask *))terminationHandler {
+
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        *terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
 }
 
 - (void)testCheckout_launchesGitCloneTask {
@@ -80,12 +85,8 @@ static NSString *BranchName = @"mybranch";
     
     NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
     
-    __block void (^terminationHandler)(NSTask *);
-    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
-        void (^block)(NSTask *);
-        [invocation getArgument:&block atIndex:2];
-        terminationHandler = block;
-    }] setTerminationHandler:[OCMArg any]];
+    void (^terminationHandler)(NSTask *);
+    [self captureTerminationHandler:&terminationHandler];
     
     NSData *configurationData = [self sampleConfigurationData];
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
