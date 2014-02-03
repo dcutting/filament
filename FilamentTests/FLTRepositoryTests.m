@@ -8,8 +8,9 @@
 static NSString *GitPath = @"/path/to/git";
 static NSString *GitURLString = @"/path/to/git/repo";
 static NSString *ClonePath = @"/path/to/cloned/repo";
-
 static NSString *BranchName = @"mybranch";
+
+void (^gitTaskTerminationHandler)(NSTask *);
 
 @interface FLTRepositoryTests : FLTAsyncXCTestCase
 
@@ -46,12 +47,11 @@ static NSString *BranchName = @"mybranch";
     self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory];
     
     self.gitURL = [NSURL URLWithString:GitURLString];
+
+    [self captureTerminationHandler:&gitTaskTerminationHandler];
 }
 
 - (void)testCheckout_doesComplete {
-    
-    void (^terminationHandler)(NSTask *);
-    [self captureTerminationHandler:&terminationHandler];
     
     NSData *configurationData = [self sampleConfigurationData];
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
@@ -62,18 +62,9 @@ static NSString *BranchName = @"mybranch";
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
+    gitTaskTerminationHandler(self.mockTask);
     
     [self assertCompletion];
-}
-
-- (void)captureTerminationHandler:(void (^ __strong *)(NSTask *))terminationHandler {
-
-    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
-        void (^block)(NSTask *);
-        [invocation getArgument:&block atIndex:2];
-        *terminationHandler = block;
-    }] setTerminationHandler:[OCMArg any]];
 }
 
 - (void)testCheckout_launchesGitCloneTask {
@@ -96,9 +87,6 @@ static NSString *BranchName = @"mybranch";
     
     NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
     
-    void (^terminationHandler)(NSTask *);
-    [self captureTerminationHandler:&terminationHandler];
-    
     NSData *configurationData = [self sampleConfigurationData];
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
     [[[[mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:configurationPath];
@@ -113,7 +101,7 @@ static NSString *BranchName = @"mybranch";
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
+    gitTaskTerminationHandler(self.mockTask);
     
     [self.mockTask verify];
     
@@ -125,9 +113,6 @@ static NSString *BranchName = @"mybranch";
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
     [[[[mockData stub] andReturn:nil] classMethod] dataWithContentsOfFile:[OCMArg any]];
     
-    void (^terminationHandler)(NSTask *);
-    [self captureTerminationHandler:&terminationHandler];
-    
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
         
         XCTAssertNil(configuration, @"Expected nil configuration.");
@@ -135,16 +120,13 @@ static NSString *BranchName = @"mybranch";
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
+    gitTaskTerminationHandler(self.mockTask);
     
     [self assertCompletion];
 }
 
 - (void)testCheckout_errorExitStatus_returnsNilConfigurationInCompletionHandler {
     
-    void (^terminationHandler)(NSTask *);
-    [self captureTerminationHandler:&terminationHandler];
-
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
     [[[[mockData stub] andReturn:[NSData data]] classMethod] dataWithContentsOfFile:[OCMArg any]];
 
@@ -157,7 +139,7 @@ static NSString *BranchName = @"mybranch";
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
+    gitTaskTerminationHandler(self.mockTask);
 
     [self assertCompletion];
 }
@@ -169,6 +151,15 @@ static NSString *BranchName = @"mybranch";
     NSString *path = [bundle pathForResource:@"ConfigurationFile.json" ofType:nil];
     
     return [NSData dataWithContentsOfFile:path];
+}
+
+- (void)captureTerminationHandler:(void (^ __strong *)(NSTask *))terminationHandler {
+    
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        *terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
 }
 
 @end
