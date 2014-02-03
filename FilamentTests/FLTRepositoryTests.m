@@ -18,6 +18,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
 
 @property (nonatomic, strong) id mockTaskFactory;
 @property (nonatomic, strong) id mockTask;
+@property (nonatomic, strong) id mockData;
 
 @property (nonatomic, copy) NSURL *gitURL;
 
@@ -44,6 +45,8 @@ void (^gitTaskTerminationHandler)(NSTask *);
     self.mockTask = [OCMockObject niceMockForClass:[NSTask class]];
     [[[self.mockTaskFactory stub] andReturn:self.mockTask] task];
     
+    self.mockData = [OCMockObject niceMockForClass:[NSData class]];
+    
     self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory];
     
     self.gitURL = [NSURL URLWithString:GitURLString];
@@ -51,11 +54,19 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [self captureTerminationHandler:&gitTaskTerminationHandler];
 }
 
+- (void)captureTerminationHandler:(void (^ __strong *)(NSTask *))terminationHandler {
+    
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        *terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
+}
+
 - (void)testCheckout_doesComplete {
     
     NSData *configurationData = [self sampleConfigurationData];
-    id mockData = [OCMockObject niceMockForClass:[NSData class]];
-    [[[[mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:[OCMArg any]];
+    [[[[self.mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:[OCMArg any]];
 
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
         
@@ -88,8 +99,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
     
     NSData *configurationData = [self sampleConfigurationData];
-    id mockData = [OCMockObject niceMockForClass:[NSData class]];
-    [[[[mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:configurationPath];
+    [[[[self.mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:configurationPath];
 
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
         
@@ -110,8 +120,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
 
 - (void)testCheckout_missingConfiguration_returnsNilConfigurationInCompletionHandler {
     
-    id mockData = [OCMockObject niceMockForClass:[NSData class]];
-    [[[[mockData stub] andReturn:nil] classMethod] dataWithContentsOfFile:[OCMArg any]];
+    [[[[self.mockData stub] andReturn:nil] classMethod] dataWithContentsOfFile:[OCMArg any]];
     
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
         
@@ -127,8 +136,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
 
 - (void)testCheckout_errorExitStatus_returnsNilConfigurationInCompletionHandler {
     
-    id mockData = [OCMockObject niceMockForClass:[NSData class]];
-    [[[[mockData stub] andReturn:[NSData data]] classMethod] dataWithContentsOfFile:[OCMArg any]];
+    [[[[self.mockData stub] andReturn:[NSData data]] classMethod] dataWithContentsOfFile:[OCMArg any]];
 
     [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
     
@@ -151,15 +159,6 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSString *path = [bundle pathForResource:@"ConfigurationFile.json" ofType:nil];
     
     return [NSData dataWithContentsOfFile:path];
-}
-
-- (void)captureTerminationHandler:(void (^ __strong *)(NSTask *))terminationHandler {
-    
-    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
-        void (^block)(NSTask *);
-        [invocation getArgument:&block atIndex:2];
-        *terminationHandler = block;
-    }] setTerminationHandler:[OCMArg any]];
 }
 
 @end
