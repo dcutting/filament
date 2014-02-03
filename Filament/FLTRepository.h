@@ -5,7 +5,7 @@
 #import "FLTIntegratorConfiguration.h"
 #import "NSTaskFactory.h"
 
-typedef void(^FLTRepositoryCompletionHandler)(FLTIntegratorConfiguration *configuration);
+typedef void(^FLTRepositoryCompletionHandler)(FLTIntegratorConfiguration *configuration, NSError *error);
 
 @interface FLTRepository : NSObject
 

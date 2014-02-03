@@ -22,7 +22,7 @@
 
 - (void)integrateGitURL:(NSURL *)gitURL branchName:(NSString *)branchName toPath:(NSString *)toPath repository:(FLTRepository *)repository completionHandler:(FLTIntegrationCompletionHandler)completionHandler {
     
-    [repository checkoutGitURL:gitURL branchName:branchName toPath:toPath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+    [repository checkoutGitURL:gitURL branchName:branchName toPath:toPath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         [self.integrator integrateConfiguration:configuration completionHandler:^(FLTIntegrationReport *report) {
             

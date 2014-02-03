@@ -70,7 +70,7 @@
 - (void)callCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler configuration:(FLTIntegratorConfiguration *)configuration {
     
     if (completionHandler) {
-        completionHandler(configuration);
+        completionHandler(configuration, nil);
     }
 }
 

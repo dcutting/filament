@@ -68,7 +68,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSData *configurationData = [self sampleConfigurationData];
     [[[[self.mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:[OCMArg any]];
 
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         [self signalCompletion];
     }];
@@ -101,7 +101,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSData *configurationData = [self sampleConfigurationData];
     [[[[self.mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:configurationPath];
 
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertEqualObjects(resultsPath, configuration.resultsPath, @"Expected '%@' but got '%@' for results path.", resultsPath, configuration.resultsPath);
         XCTAssertEqualObjects(rootPath, configuration.rootPath, @"Expected '%@' but got '%@' for root path.", rootPath, configuration.rootPath);
@@ -122,7 +122,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
     
     [[[[self.mockData stub] andReturn:nil] classMethod] dataWithContentsOfFile:[OCMArg any]];
     
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertNil(configuration, @"Expected nil configuration.");
         
@@ -140,7 +140,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
 
     [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
     
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
         
