@@ -32,7 +32,11 @@
                               clonePath
                               ]];
     cloneTask.terminationHandler = ^(NSTask *task) {
-        [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
+        if (0 == task.terminationStatus) {
+            [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
+        } else {
+            [self callCompletionHandler:completionHandler configuration:nil];
+        }
     };
     [cloneTask launch];
 }

@@ -22,6 +22,17 @@ static NSString *BranchName = @"mybranch";
 
 @end
 
+/* To do:
+ 
+ * Catch NSInvalidArgumentException on task launch when path is invalid or cannot create task.
+ * Handle tasks terminated by uncaught signals.
+ * Could not decode JSON.
+ * Handle unexpected JSON.
+ * Should this class also pull down git submodules?
+ * Rework to accept git URL, branch name and clone path as constructor arguments. This will make handling of different sorts of repositories easier.
+ 
+ */
+
 @implementation FLTRepositoryTests
 
 - (void)setUp {
@@ -129,24 +140,27 @@ static NSString *BranchName = @"mybranch";
     [self assertCompletion];
 }
 
-//- (void)testCheckout_failed_returnsNilConfigurationInCompletionHandler {
-//    
-//    void (^terminationHandler)(NSTask *);
-//    [self captureTerminationHandler:&terminationHandler];
-//
-//    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
-//    
-//    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
-//        
-//        XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
-//        
-//        [self signalCompletion];
-//    }];
-//    
-//    terminationHandler(self.mockTask);
-//
-//    [self assertCompletion];
-//}
+- (void)testCheckout_errorExitStatus_returnsNilConfigurationInCompletionHandler {
+    
+    void (^terminationHandler)(NSTask *);
+    [self captureTerminationHandler:&terminationHandler];
+
+    id mockData = [OCMockObject niceMockForClass:[NSData class]];
+    [[[[mockData stub] andReturn:[NSData data]] classMethod] dataWithContentsOfFile:[OCMArg any]];
+
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
+        
+        [self signalCompletion];
+    }];
+    
+    terminationHandler(self.mockTask);
+
+    [self assertCompletion];
+}
 
 - (NSData *)sampleConfigurationData {
     
