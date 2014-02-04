@@ -8,8 +8,8 @@
 
 - (void)awakeFromNib {
     
-    self.statusItem = [[NSStatusBar systemStatusBar]
-                        statusItemWithLength:NSVariableStatusItemLength];
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    
     [self.statusItem setHighlightMode:YES];
     [self.statusItem setTitle:@"Filament"];
     [self.statusItem setEnabled:YES];
@@ -19,7 +19,7 @@
     [self.statusItem setTarget:self];
 }
 
-- (IBAction)menuBarItemPressed:(id)sender {
+- (void)menuBarItemPressed:(id)sender {
     NSLog(@"menuBarItemPressed: %@", sender);
 }
 
