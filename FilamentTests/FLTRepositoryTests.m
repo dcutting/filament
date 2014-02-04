@@ -39,12 +39,8 @@ static NSString *BranchName = @"mybranch";
 
 - (void)testCheckout_doesComplete {
     
-    __block void (^terminationHandler)(NSTask *);
-    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
-        void (^block)(NSTask *);
-        [invocation getArgument:&block atIndex:2];
-        terminationHandler = block;
-    }] setTerminationHandler:[OCMArg any]];
+    void (^terminationHandler)(NSTask *);
+    [self captureTerminationHandler:&terminationHandler];
     
     NSData *configurationData = [self sampleConfigurationData];
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
@@ -58,6 +54,15 @@ static NSString *BranchName = @"mybranch";
     terminationHandler(self.mockTask);
     
     [self assertCompletion];
+}
+
+- (void)captureTerminationHandler:(void (^ __strong *)(NSTask *))terminationHandler {
+
+    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
+        void (^block)(NSTask *);
+        [invocation getArgument:&block atIndex:2];
+        *terminationHandler = block;
+    }] setTerminationHandler:[OCMArg any]];
 }
 
 - (void)testCheckout_launchesGitCloneTask {
@@ -80,12 +85,8 @@ static NSString *BranchName = @"mybranch";
     
     NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
     
-    __block void (^terminationHandler)(NSTask *);
-    [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
-        void (^block)(NSTask *);
-        [invocation getArgument:&block atIndex:2];
-        terminationHandler = block;
-    }] setTerminationHandler:[OCMArg any]];
+    void (^terminationHandler)(NSTask *);
+    [self captureTerminationHandler:&terminationHandler];
     
     NSData *configurationData = [self sampleConfigurationData];
     id mockData = [OCMockObject niceMockForClass:[NSData class]];
@@ -107,6 +108,45 @@ static NSString *BranchName = @"mybranch";
     
     [self assertCompletion];
 }
+
+- (void)testCheckout_missingConfiguration_returnsNilConfigurationInCompletionHandler {
+    
+    id mockData = [OCMockObject niceMockForClass:[NSData class]];
+    [[[[mockData stub] andReturn:nil] classMethod] dataWithContentsOfFile:[OCMArg any]];
+    
+    void (^terminationHandler)(NSTask *);
+    [self captureTerminationHandler:&terminationHandler];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        
+        [self signalCompletion];
+    }];
+    
+    terminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+//- (void)testCheckout_failed_returnsNilConfigurationInCompletionHandler {
+//    
+//    void (^terminationHandler)(NSTask *);
+//    [self captureTerminationHandler:&terminationHandler];
+//
+//    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
+//    
+//    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+//        
+//        XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
+//        
+//        [self signalCompletion];
+//    }];
+//    
+//    terminationHandler(self.mockTask);
+//
+//    [self assertCompletion];
+//}
 
 - (NSData *)sampleConfigurationData {
     
