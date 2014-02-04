@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		151E755F298041D9988ACF0A /* libPods-FilamentTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21F4609F3F994AC19746ED2C /* libPods-FilamentTests.a */; };
+		27130B5E18A18DC100CF3F1E /* FLTMenuBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27130B5D18A18DC100CF3F1E /* FLTMenuBarItem.m */; };
 		C85E8DFA189435CA00C4C48F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C85E8DF9189435CA00C4C48F /* Cocoa.framework */; };
 		C85E8E04189435CA00C4C48F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C85E8E02189435CA00C4C48F /* InfoPlist.strings */; };
 		C85E8E06189435CA00C4C48F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E05189435CA00C4C48F /* main.m */; };
@@ -50,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		21F4609F3F994AC19746ED2C /* libPods-FilamentTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FilamentTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		27130B5C18A18DC100CF3F1E /* FLTMenuBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTMenuBarItem.h; sourceTree = "<group>"; };
+		27130B5D18A18DC100CF3F1E /* FLTMenuBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTMenuBarItem.m; sourceTree = "<group>"; };
 		AFF17EB512254761AD550D9F /* Pods-FilamentTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilamentTests.xcconfig"; path = "Pods/Pods-FilamentTests.xcconfig"; sourceTree = "<group>"; };
 		C85E8DF6189435CA00C4C48F /* Filament.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filament.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C85E8DF9189435CA00C4C48F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -175,6 +178,8 @@
 				C85E8E371894411400C4C48F /* FLTIntegrator.m */,
 				C85E8E391894419200C4C48F /* FLTIntegratorConfiguration.h */,
 				C85E8E3A1894419200C4C48F /* FLTIntegratorConfiguration.m */,
+				27130B5C18A18DC100CF3F1E /* FLTMenuBarItem.h */,
+				27130B5D18A18DC100CF3F1E /* FLTMenuBarItem.m */,
 				C85E8E331894406C00C4C48F /* FLTRepository.h */,
 				C85E8E341894406C00C4C48F /* FLTRepository.m */,
 				C85E8E11189435CA00C4C48F /* Images.xcassets */,
@@ -378,6 +383,7 @@
 				C85E8E32189439D400C4C48F /* FLTIntegration.m in Sources */,
 				C85E8E06189435CA00C4C48F /* main.m in Sources */,
 				C85E8E381894411400C4C48F /* FLTIntegrator.m in Sources */,
+				27130B5E18A18DC100CF3F1E /* FLTMenuBarItem.m in Sources */,
 				C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */,
 				C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */,
 				C8FF3D0318951A3700DF9ABE /* FLTIntegrationReportGenerator.m in Sources */,
