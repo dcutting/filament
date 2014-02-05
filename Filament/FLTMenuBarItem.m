@@ -17,6 +17,14 @@
     
     [self.statusItem setAction:@selector(menuBarItemPressed:)];
     [self.statusItem setTarget:self];
+    
+    NSMenu *aMenu = [[NSMenu alloc] initWithTitle:@"WooHoo!"];
+    
+    NSMenuItem *anItem = [[NSMenuItem alloc] initWithTitle:@"Option 1" action:@selector(menuBarItemPressed:) keyEquivalent:@""];
+    
+    [aMenu addItem:anItem];
+    
+    [self.statusItem setMenu:aMenu];
 }
 
 - (void)menuBarItemPressed:(id)sender {
