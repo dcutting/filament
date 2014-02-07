@@ -2,6 +2,10 @@
 
 #import "FLTRepository.h"
 
+@class FLTRepositoryTests;
+
+NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
+
 @interface FLTRepository ()
 
 @property (nonatomic, copy) NSString *gitPath;
@@ -35,7 +39,7 @@
         if (0 == task.terminationStatus) {
             [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
         } else {
-            [self callCompletionHandler:completionHandler configuration:nil];
+            [self callCompletionHandler:completionHandler configuration:nil error:nil];
         }
     };
     [cloneTask launch];
@@ -49,7 +53,8 @@
     if (data) {
         [self parseData:data clonePath:clonePath completionHandler:completionHandler];
     } else {
-        [self callCompletionHandler:completionHandler configuration:nil];
+        NSError *error = [NSError errorWithDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeMissingConfiguration userInfo:nil];
+        [self callCompletionHandler:completionHandler configuration:nil error:error];
     }
 }
 
@@ -64,13 +69,13 @@
     configuration.workspace = jsonConfiguration[@"workspace"];
     configuration.scheme = jsonConfiguration[@"scheme"];
     
-    [self callCompletionHandler:completionHandler configuration:configuration];
+    [self callCompletionHandler:completionHandler configuration:configuration error:nil];
 }
 
-- (void)callCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler configuration:(FLTIntegratorConfiguration *)configuration {
+- (void)callCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler configuration:(FLTIntegratorConfiguration *)configuration error:(NSError *)error {
     
     if (completionHandler) {
-        completionHandler(configuration, nil);
+        completionHandler(configuration, error);
     }
 }
 

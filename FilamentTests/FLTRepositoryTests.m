@@ -113,8 +113,6 @@ void (^gitTaskTerminationHandler)(NSTask *);
     
     gitTaskTerminationHandler(self.mockTask);
     
-    [self.mockTask verify];
-    
     [self assertCompletion];
 }
 
@@ -125,6 +123,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeMissingConfiguration];
         
         [self signalCompletion];
     }];
@@ -159,6 +158,12 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSString *path = [bundle pathForResource:@"ConfigurationFile.json" ofType:nil];
     
     return [NSData dataWithContentsOfFile:path];
+}
+
+- (void)assertError:(NSError *)error hasDomain:(NSString *)domain code:(NSInteger)code {
+    
+    XCTAssertEqualObjects(domain, error.domain, @"Expected error domain '%@' but got '%@'.", domain, error.domain);
+    XCTAssertEqual(code, error.code, @"Expected error code %ld but got %ld.", code, error.code);
 }
 
 @end

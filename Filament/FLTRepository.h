@@ -5,6 +5,12 @@
 #import "FLTIntegratorConfiguration.h"
 #import "NSTaskFactory.h"
 
+extern NSString *FLTRepositoryErrorDomain;
+
+typedef NS_ENUM(NSInteger, FLTRepositoryErrorCode) {
+    FLTRepositoryErrorCodeMissingConfiguration
+};
+
 typedef void(^FLTRepositoryCompletionHandler)(FLTIntegratorConfiguration *configuration, NSError *error);
 
 @interface FLTRepository : NSObject
