@@ -2,6 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FLTFileReader.h"
 #import "FLTIntegratorConfiguration.h"
 #import "NSTaskFactory.h"
 
@@ -16,7 +17,7 @@ typedef void(^FLTRepositoryCompletionHandler)(FLTIntegratorConfiguration *config
 
 @interface FLTRepository : NSObject
 
-- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory;
+- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory fileReader:(FLTFileReader *)fileReader;
 - (void)checkoutGitURL:(NSURL *)gitURL branchName:(NSString *)branchName toPath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler;
 
 @end

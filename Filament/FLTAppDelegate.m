@@ -21,7 +21,7 @@
     NSString *clonePath = @"/tmp/BasicAppClone";
 
     NSString *gitPath = @"/usr/local/bin/git";
-    FLTRepository *repository = [[FLTRepository alloc] initWithGitPath:gitPath taskFactory:[NSTaskFactory new]];
+    FLTRepository *repository = [[FLTRepository alloc] initWithGitPath:gitPath taskFactory:[NSTaskFactory new] fileReader:[FLTFileReader new]];
 
     NSLog(@"Started integration...");
 

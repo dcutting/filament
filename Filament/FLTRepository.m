@@ -10,17 +10,19 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
 
 @property (nonatomic, copy) NSString *gitPath;
 @property (nonatomic, strong) NSTaskFactory *taskFactory;
+@property (nonatomic, strong) FLTFileReader *fileReader;
 
 @end
 
 @implementation FLTRepository
 
-- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory {
-    
+- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory fileReader:(FLTFileReader *)fileReader {
+
     self = [super init];
     if (self) {
         _gitPath = gitPath;
         _taskFactory = taskFactory;
+        _fileReader = fileReader;
     }
     return self;
 }
@@ -49,7 +51,7 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
 - (void)parseConfigurationAtClonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
     
     NSString *configurationPath = [NSString pathWithComponents:@[ clonePath, @".filament" ]];
-    NSData *data = [NSData dataWithContentsOfFile:configurationPath];
+    NSData *data = [self.fileReader dataWithContentsOfFile:configurationPath];
     
     if (data) {
         [self parseData:data clonePath:clonePath completionHandler:completionHandler];

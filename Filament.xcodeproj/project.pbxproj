@@ -26,6 +26,8 @@
 		C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E3D1894425D00C4C48F /* FLTIntegrationReport.m */; };
 		C85E8E401894707F00C4C48F /* FLTIntegratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E3F1894707F00C4C48F /* FLTIntegratorTests.m */; };
 		C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E42189479A700C4C48F /* NSTaskFactory.m */; };
+		C8AB020418A4E00A00C392D4 /* FLTFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AB020318A4E00A00C392D4 /* FLTFileReader.m */; };
+		C8AB020618A4E1A700C392D4 /* FLTFileReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AB020518A4E1A700C392D4 /* FLTFileReaderTests.m */; };
 		C8B15C7518972714006CDE02 /* FLTAsyncXCTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C8B15C7418972714006CDE02 /* FLTAsyncXCTestCase.m */; };
 		C8FF3D0018949D0F00DF9ABE /* NSTaskFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */; };
 		C8FF3D0318951A3700DF9ABE /* FLTIntegrationReportGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FF3D0218951A3700DF9ABE /* FLTIntegrationReportGenerator.m */; };
@@ -83,6 +85,9 @@
 		C85E8E3F1894707F00C4C48F /* FLTIntegratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTIntegratorTests.m; sourceTree = "<group>"; };
 		C85E8E41189479A700C4C48F /* NSTaskFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTaskFactory.h; sourceTree = "<group>"; };
 		C85E8E42189479A700C4C48F /* NSTaskFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskFactory.m; sourceTree = "<group>"; };
+		C8AB020218A4E00A00C392D4 /* FLTFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTFileReader.h; sourceTree = "<group>"; };
+		C8AB020318A4E00A00C392D4 /* FLTFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTFileReader.m; sourceTree = "<group>"; };
+		C8AB020518A4E1A700C392D4 /* FLTFileReaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTFileReaderTests.m; sourceTree = "<group>"; };
 		C8B15C7318972714006CDE02 /* FLTAsyncXCTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTAsyncXCTestCase.h; sourceTree = "<group>"; };
 		C8B15C7418972714006CDE02 /* FLTAsyncXCTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTAsyncXCTestCase.m; sourceTree = "<group>"; };
 		C8FF3CFF18949D0F00DF9ABE /* NSTaskFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTaskFactoryTests.m; sourceTree = "<group>"; };
@@ -165,6 +170,8 @@
 			children = (
 				C85E8E0B189435CA00C4C48F /* FLTAppDelegate.h */,
 				C85E8E0C189435CA00C4C48F /* FLTAppDelegate.m */,
+				C8AB020218A4E00A00C392D4 /* FLTFileReader.h */,
+				C8AB020318A4E00A00C392D4 /* FLTFileReader.m */,
 				C85E8E30189439D400C4C48F /* FLTIntegration.h */,
 				C85E8E31189439D400C4C48F /* FLTIntegration.m */,
 				C85E8E3C1894425D00C4C48F /* FLTIntegrationReport.h */,
@@ -203,6 +210,7 @@
 			children = (
 				C8B15C7318972714006CDE02 /* FLTAsyncXCTestCase.h */,
 				C8B15C7418972714006CDE02 /* FLTAsyncXCTestCase.m */,
+				C8AB020518A4E1A700C392D4 /* FLTFileReaderTests.m */,
 				C8FF3D0418951E8F00DF9ABE /* FLTIntegrationReportGeneratorTests.m */,
 				C8FF3D0D1895292C00DF9ABE /* FLTIntegrationReportTests.m */,
 				C85E8E2E1894397000C4C48F /* FLTIntegrationTests.m */,
@@ -376,6 +384,7 @@
 				C85E8E3B1894419200C4C48F /* FLTIntegratorConfiguration.m in Sources */,
 				C85E8E351894406C00C4C48F /* FLTRepository.m in Sources */,
 				C85E8E32189439D400C4C48F /* FLTIntegration.m in Sources */,
+				C8AB020418A4E00A00C392D4 /* FLTFileReader.m in Sources */,
 				C85E8E06189435CA00C4C48F /* main.m in Sources */,
 				C85E8E381894411400C4C48F /* FLTIntegrator.m in Sources */,
 				C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */,
@@ -392,6 +401,7 @@
 				C8FF3D1018952CED00DF9ABE /* FLTRepositoryTests.m in Sources */,
 				C8B15C7518972714006CDE02 /* FLTAsyncXCTestCase.m in Sources */,
 				C8FF3D0E1895292C00DF9ABE /* FLTIntegrationReportTests.m in Sources */,
+				C8AB020618A4E1A700C392D4 /* FLTFileReaderTests.m in Sources */,
 				C85E8E2F1894397000C4C48F /* FLTIntegrationTests.m in Sources */,
 				C85E8E401894707F00C4C48F /* FLTIntegratorTests.m in Sources */,
 				C8FF3D0018949D0F00DF9ABE /* NSTaskFactoryTests.m in Sources */,
