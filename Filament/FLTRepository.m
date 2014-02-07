@@ -29,29 +29,31 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
 
 - (void)checkoutGitURL:(NSURL *)gitURL branchName:(NSString *)branchName toPath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
     
-    NSTask *cloneTask = [self.taskFactory task];
-    [cloneTask setLaunchPath:self.gitPath];
-    [cloneTask setArguments:@[
-                              @"clone",
-                              @"--branch", branchName,
-                              [gitURL absoluteString],
-                              clonePath
-                              ]];
-    cloneTask.terminationHandler = ^(NSTask *task) {
+    NSTask *task = [self taskForGitURL:gitURL branchName:branchName clonePath:clonePath];
+    
+    task.terminationHandler = ^(NSTask *task) {
         if (0 == task.terminationStatus) {
             [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
         } else {
-            NSError *error = [NSError errorWithDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeBadExitCode userInfo:nil];
-            [self callCompletionHandler:completionHandler configuration:nil error:error];
+            [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeBadExitCode];
         }
     };
+
     @try {
-        [cloneTask launch];
+        [task launch];
+    } @catch (NSException *exception) {
+        [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeTool];
     }
-    @catch (NSException *exception) {
-        NSError *error = [NSError errorWithDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeTool userInfo:nil];
-        [self callCompletionHandler:completionHandler configuration:nil error:error];
-    }
+}
+
+- (NSTask *)taskForGitURL:(NSURL *)gitURL branchName:(NSString *)branchName clonePath:(NSString *)clonePath {
+    
+    NSTask *cloneTask = [self.taskFactory task];
+    
+    [cloneTask setLaunchPath:self.gitPath];
+    [cloneTask setArguments:@[ @"clone", @"--branch", branchName, [gitURL absoluteString], clonePath ]];
+    
+    return cloneTask;
 }
 
 - (void)parseConfigurationAtClonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
@@ -62,8 +64,7 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
     if (data) {
         [self parseData:data clonePath:clonePath completionHandler:completionHandler];
     } else {
-        NSError *error = [NSError errorWithDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeMissingConfiguration userInfo:nil];
-        [self callCompletionHandler:completionHandler configuration:nil error:error];
+        [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeMissingConfiguration];
     }
 }
 
@@ -79,6 +80,12 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
     configuration.scheme = jsonConfiguration[@"scheme"];
     
     [self callCompletionHandler:completionHandler configuration:configuration error:nil];
+}
+
+- (void)callCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler errorCode:(NSInteger)errorCode {
+    
+    NSError *error = [NSError errorWithDomain:FLTRepositoryErrorDomain code:errorCode userInfo:nil];
+    [self callCompletionHandler:completionHandler configuration:nil error:error];
 }
 
 - (void)callCompletionHandler:(FLTRepositoryCompletionHandler)completionHandler configuration:(FLTIntegratorConfiguration *)configuration error:(NSError *)error {
