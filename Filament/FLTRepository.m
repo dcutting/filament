@@ -45,7 +45,13 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
             [self callCompletionHandler:completionHandler configuration:nil error:error];
         }
     };
-    [cloneTask launch];
+    @try {
+        [cloneTask launch];
+    }
+    @catch (NSException *exception) {
+        NSError *error = [NSError errorWithDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeTool userInfo:nil];
+        [self callCompletionHandler:completionHandler configuration:nil error:error];
+    }
 }
 
 - (void)parseConfigurationAtClonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {

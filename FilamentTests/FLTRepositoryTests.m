@@ -26,8 +26,6 @@ void (^gitTaskTerminationHandler)(NSTask *);
 
 /* To do:
  
- * Make tests reliable.
- * Catch NSInvalidArgumentException on task launch when path is invalid or cannot create task.
  * Handle tasks terminated by uncaught signals.
  * Could not decode JSON.
  * Handle unexpected JSON.
@@ -90,6 +88,21 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [self.mockTask verify];
 }
 
+- (void)testCheckout_launchException_informsDelegateOfToolError {
+    
+    [[[self.mockTask stub] andThrow:[NSException exceptionWithName:NSInvalidArgumentException reason:nil userInfo:nil]] launch];
+        
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeTool];
+        
+        [self signalCompletion];
+    }];
+    
+    [self assertCompletion];
+}
+
 - (void)testCheckout_checkedOutBranch_returnsParsedConfigurationInCompletionHandler {
 
     NSString *resultsPath = [NSString pathWithComponents:@[ ClonePath, @"build.json" ]];
@@ -142,7 +155,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
     
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
-        XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
+        XCTAssertNil(configuration, @"Expected nil configuration.");
         [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeBadExitCode];
         
         [self signalCompletion];
