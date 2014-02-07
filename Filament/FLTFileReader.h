@@ -5,5 +5,6 @@
 @interface FLTFileReader : NSObject
 
 - (NSData *)dataWithContentsOfFile:(NSString *)path;
+- (NSString *)stringWithContentsOfFile:(NSString *)path;
 
 @end

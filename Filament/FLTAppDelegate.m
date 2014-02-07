@@ -28,7 +28,7 @@
 - (FLTIntegrator *)newIntegrator {
     
     NSString *xctoolPath = @"~/Code/xctool/xctool.sh";
-    FLTIntegrator *integrator = [[FLTIntegrator alloc] initWithXctoolPath:xctoolPath taskFactory:[NSTaskFactory new] integrationReportGenerator:[FLTIntegrationReportGenerator new]];
+    FLTIntegrator *integrator = [[FLTIntegrator alloc] initWithXctoolPath:xctoolPath taskFactory:[NSTaskFactory new] fileReader:[FLTFileReader new] integrationReportGenerator:[FLTIntegrationReportGenerator new]];
     return integrator;
 }
 

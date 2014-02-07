@@ -9,4 +9,9 @@
     return [NSData dataWithContentsOfFile:path];
 }
 
+- (NSString *)stringWithContentsOfFile:(NSString *)path {
+    
+    return [NSString stringWithContentsOfFile:path usedEncoding:NULL error:NULL];
+}
+
 @end
