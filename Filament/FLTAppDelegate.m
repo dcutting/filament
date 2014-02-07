@@ -11,8 +11,8 @@
     FLTRepository *repository = [self newRepository];
     FLTIntegration *integration = [self newIntegration];
 
-    NSURL *gitURL = [NSURL URLWithString:@"/Users/mike/Developer/private/objC/wfr_ios/"];
-    NSString *branchName = @"filament";
+    NSURL *gitURL = [NSURL URLWithString:@"/Users/dcutting/Code/Tests/BasicApp"];
+    NSString *branchName = @"sampleBranch";
     NSString *clonePath = @"/tmp/BasicAppClone";
 
     NSLog(@"Started integration...");
