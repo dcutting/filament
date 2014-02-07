@@ -4,4 +4,10 @@
 
 @implementation FLTIntegratorConfiguration
 
+
+- (NSString *)description {
+    
+    return [NSString stringWithFormat:@"resultsPath=%@, rootPath=%@, workspace=%@, scheme=%@", self.resultsPath, self.rootPath, self.workspace, self.scheme];
+    
+}
 @end
