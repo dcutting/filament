@@ -32,17 +32,13 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
     NSTask *task = [self taskForGitURL:gitURL branchName:branchName clonePath:clonePath];
     
     task.terminationHandler = ^(NSTask *task) {
-        if (0 == task.terminationStatus) {
-            [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
-        } else {
-            [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeBadExitCode];
-        }
+        [self handleTerminatedTask:task clonePath:clonePath completionHandler:completionHandler];
     };
 
     @try {
         [task launch];
     } @catch (NSException *exception) {
-        [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeTool];
+        [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeToolFailure];
     }
 }
 
@@ -54,6 +50,19 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
     [cloneTask setArguments:@[ @"clone", @"--branch", branchName, [gitURL absoluteString], clonePath ]];
     
     return cloneTask;
+}
+
+- (void)handleTerminatedTask:(NSTask *)task clonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
+    
+    if (NSTaskTerminationReasonExit == task.terminationReason) {
+        if (0 == task.terminationStatus) {
+            [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
+        } else {
+            [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeBadExitCode];
+        }
+    } else {
+        [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeToolFailure];
+    }
 }
 
 - (void)parseConfigurationAtClonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {

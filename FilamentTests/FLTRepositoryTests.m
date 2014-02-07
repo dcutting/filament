@@ -88,14 +88,14 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [self.mockTask verify];
 }
 
-- (void)testCheckout_launchException_informsDelegateOfToolError {
+- (void)testCheckout_launchException_returnsToolFailureError {
     
     [[[self.mockTask stub] andThrow:[NSException exceptionWithName:NSInvalidArgumentException reason:nil userInfo:nil]] launch];
         
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
 
         XCTAssertNil(configuration, @"Expected nil configuration.");
-        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeTool];
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeToolFailure];
         
         [self signalCompletion];
     }];
@@ -110,9 +110,10 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSString *workspace = @"MyWorkspace.xcworkspace";
     NSString *scheme = @"MyScheme";
     
-    NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
-    
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+
     NSData *configurationData = [self sampleConfigurationData];
+    NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
     [[[self.mockFileReader stub] andReturn:configurationData] dataWithContentsOfFile:configurationPath];
 
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
@@ -130,10 +131,12 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [self assertCompletion];
 }
 
-- (void)testCheckout_missingConfiguration_returnsNilConfigurationInCompletionHandler {
+- (void)testCheckout_missingConfiguration_returnsMissingConfigurationError {
     
     [[[self.mockFileReader stub] andReturn:nil] dataWithContentsOfFile:[OCMArg any]];
     
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertNil(configuration, @"Expected nil configuration.");
@@ -147,10 +150,28 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [self assertCompletion];
 }
 
-- (void)testCheckout_errorExitStatus_returnsNilConfigurationInCompletionHandler {
+- (void)testCheckout_uncaughtSignalTerminationReason_returnsToolFailureError {
+    
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonUncaughtSignal)] terminationReason];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeToolFailure];
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+- (void)testCheckout_errorTerminationStatus_returnsBadExitCodeError {
     
     [[[self.mockFileReader stub] andReturn:[NSData data]] dataWithContentsOfFile:[OCMArg any]];
 
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
     [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
     
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {

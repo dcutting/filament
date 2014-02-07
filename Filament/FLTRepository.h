@@ -9,7 +9,7 @@
 extern NSString *FLTRepositoryErrorDomain;
 
 typedef NS_ENUM(NSInteger, FLTRepositoryErrorCode) {
-    FLTRepositoryErrorCodeTool,
+    FLTRepositoryErrorCodeToolFailure,
     FLTRepositoryErrorCodeBadExitCode,
     FLTRepositoryErrorCodeMissingConfiguration
 };
