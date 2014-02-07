@@ -11,38 +11,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <window title="Filament" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
-            <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="adz-fr-oBz">
-                        <rect key="frame" x="192" y="163" width="97" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Integrate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MJN-Gz-GhA">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="clickedIntegrate:" target="494" id="rZf-BX-M1m"/>
-                        </connections>
-                    </button>
-                </subviews>
-                <constraints>
-                    <constraint firstAttribute="centerX" secondItem="adz-fr-oBz" secondAttribute="centerX" id="1Ql-YI-EU1"/>
-                    <constraint firstAttribute="centerY" secondItem="adz-fr-oBz" secondAttribute="centerY" id="eH5-Qx-2pH"/>
-                </constraints>
-            </view>
-        </window>
-        <customObject id="494" customClass="FLTAppDelegate">
-            <connections>
-                <outlet property="window" destination="371" id="532"/>
-            </connections>
-        </customObject>
+        <customObject id="494" customClass="FLTAppDelegate"/>
         <customObject id="420" customClass="NSFontManager"/>
         <customObject id="Jo7-e0-wgd" customClass="FLTMenuBarItem">
             <connections>
@@ -59,8 +28,18 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="mJh-Jx-Z3c"/>
+                <menuItem title="Integrate" id="aCE-aW-AuW">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="clickedIntegrate:" target="494" id="ZHg-my-kvF"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="fiM-DY-uKF"/>
                 <menuItem title="Quit Filament" id="WpQ-mN-fPK">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="terminate:" target="-3" id="KSz-Tw-r2U"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>
