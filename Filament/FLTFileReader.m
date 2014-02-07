@@ -5,7 +5,8 @@
 @implementation FLTFileReader
 
 - (NSData *)dataWithContentsOfFile:(NSString *)path {
-    return nil;
+
+    return [NSData dataWithContentsOfFile:path];
 }
 
 @end
