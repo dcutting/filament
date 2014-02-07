@@ -142,6 +142,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeBadExitCode];
         
         [self signalCompletion];
     }];

@@ -39,7 +39,8 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
         if (0 == task.terminationStatus) {
             [self parseConfigurationAtClonePath:clonePath completionHandler:completionHandler];
         } else {
-            [self callCompletionHandler:completionHandler configuration:nil error:nil];
+            NSError *error = [NSError errorWithDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeBadExitCode userInfo:nil];
+            [self callCompletionHandler:completionHandler configuration:nil error:error];
         }
     };
     [cloneTask launch];
