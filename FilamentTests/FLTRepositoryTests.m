@@ -27,7 +27,6 @@ void (^gitTaskTerminationHandler)(NSTask *);
 
 /* To do:
  
- * Could not decode JSON.
  * Handle unexpected JSON.
  * Should this class also pull down git submodules?
  * Rework to accept git URL, branch name and clone path as constructor arguments. This will make handling of different sorts of repositories easier.
