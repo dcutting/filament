@@ -35,7 +35,7 @@
 - (FLTRepository *)newRepository {
     
     NSString *gitPath = @"/usr/bin/git";
-    FLTRepository *repository = [[FLTRepository alloc] initWithGitPath:gitPath taskFactory:[NSTaskFactory new] fileReader:[FLTFileReader new]];
+    FLTRepository *repository = [[FLTRepository alloc] initWithGitPath:gitPath taskFactory:[NSTaskFactory new] fileReader:[FLTFileReader new] jsonSerialiser:[FLTJSONSerialiser new]];
     return repository;
 }
 
@@ -46,6 +46,5 @@
     
     return integration;
 }
-
 
 @end

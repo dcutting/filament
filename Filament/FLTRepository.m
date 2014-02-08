@@ -11,18 +11,20 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
 @property (nonatomic, copy) NSString *gitPath;
 @property (nonatomic, strong) NSTaskFactory *taskFactory;
 @property (nonatomic, strong) FLTFileReader *fileReader;
+@property (nonatomic, strong) FLTJSONSerialiser *jsonSerialiser;
 
 @end
 
 @implementation FLTRepository
 
-- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory fileReader:(FLTFileReader *)fileReader {
+- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory fileReader:(FLTFileReader *)fileReader jsonSerialiser:(FLTJSONSerialiser *)jsonSerialiser {
 
     self = [super init];
     if (self) {
         _gitPath = gitPath;
         _taskFactory = taskFactory;
         _fileReader = fileReader;
+        _jsonSerialiser = jsonSerialiser;
     }
     return self;
 }
@@ -79,14 +81,23 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
 
 - (void)parseData:(NSData *)data clonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
     
-    NSDictionary *jsonConfiguration = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+    NSDictionary *jsonDictionary = [self.jsonSerialiser JSONObjectWithData:data];
     
+    if (jsonDictionary) {
+        [self parseJSONDictionary:jsonDictionary clonePath:clonePath completionHandler:completionHandler];
+    } else {
+        [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeCorruptConfiguration];
+    }
+}
+
+- (void)parseJSONDictionary:(NSDictionary *)jsonDictionary clonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
+
     FLTIntegratorConfiguration *configuration = [FLTIntegratorConfiguration new];
     
     configuration.resultsPath = [NSString pathWithComponents:@[ clonePath, @"build.json" ]];
     configuration.rootPath = clonePath;
-    configuration.workspace = jsonConfiguration[@"workspace"];
-    configuration.scheme = jsonConfiguration[@"scheme"];
+    configuration.workspace = jsonDictionary[@"workspace"];
+    configuration.scheme = jsonDictionary[@"scheme"];
     
     [self callCompletionHandler:completionHandler configuration:configuration error:nil];
 }

@@ -19,6 +19,7 @@ void (^gitTaskTerminationHandler)(NSTask *);
 @property (nonatomic, strong) id mockTaskFactory;
 @property (nonatomic, strong) id mockTask;
 @property (nonatomic, strong) id mockFileReader;
+@property (nonatomic, strong) id mockJsonSerialiser;
 
 @property (nonatomic, copy) NSURL *gitURL;
 
@@ -26,7 +27,6 @@ void (^gitTaskTerminationHandler)(NSTask *);
 
 /* To do:
  
- * Handle tasks terminated by uncaught signals.
  * Could not decode JSON.
  * Handle unexpected JSON.
  * Should this class also pull down git submodules?
@@ -45,8 +45,9 @@ void (^gitTaskTerminationHandler)(NSTask *);
     [[[self.mockTaskFactory stub] andReturn:self.mockTask] task];
     
     self.mockFileReader = [OCMockObject niceMockForClass:[FLTFileReader class]];
+    self.mockJsonSerialiser = [OCMockObject niceMockForClass:[FLTJSONSerialiser class]];
     
-    self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory fileReader:self.mockFileReader];
+    self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory fileReader:self.mockFileReader jsonSerialiser:self.mockJsonSerialiser];
     
     self.gitURL = [NSURL URLWithString:GitURLString];
 
@@ -116,6 +117,8 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
     [[[self.mockFileReader stub] andReturn:configurationData] dataWithContentsOfFile:configurationPath];
 
+    [[[self.mockJsonSerialiser stub] andReturn:[NSJSONSerialization JSONObjectWithData:configurationData options:0 error:NULL]]JSONObjectWithData:configurationData];
+
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertEqualObjects(resultsPath, configuration.resultsPath, @"Expected '%@' but got '%@' for results path.", resultsPath, configuration.resultsPath);
@@ -141,6 +144,26 @@ void (^gitTaskTerminationHandler)(NSTask *);
         
         XCTAssertNil(configuration, @"Expected nil configuration.");
         [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeMissingConfiguration];
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+- (void)testCheckout_corruptConfigurationJSON_returnsCorruptConfigurationError {
+    
+    [[[self.mockFileReader stub] andReturn:[NSData data]] dataWithContentsOfFile:[OCMArg any]];
+    [[[self.mockJsonSerialiser stub] andReturn:nil] JSONObjectWithData:[OCMArg any]];
+    
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeCorruptConfiguration];
         
         [self signalCompletion];
     }];
