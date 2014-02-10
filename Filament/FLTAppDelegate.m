@@ -35,7 +35,10 @@
 - (FLTRepository *)newRepository {
     
     NSString *gitPath = @"/usr/bin/git";
-    FLTRepository *repository = [[FLTRepository alloc] initWithGitPath:gitPath taskFactory:[NSTaskFactory new] fileReader:[FLTFileReader new] jsonSerialiser:[FLTJSONSerialiser new]];
+    NSString *patternPath = [[NSBundle mainBundle] pathForResource:@"FilamentConfigurationPattern.json" ofType:nil];
+    NSData *patternData = [NSData dataWithContentsOfFile:patternPath];
+    id pattern = [NSJSONSerialization JSONObjectWithData:patternData options:0 error:NULL];
+    FLTRepository *repository = [[FLTRepository alloc] initWithGitPath:gitPath taskFactory:[NSTaskFactory new] fileReader:[FLTFileReader new] jsonSerialiser:[FLTJSONSerialiser new] veriJSON:[VeriJSON new] veriJSONPattern:pattern];
     return repository;
 }
 

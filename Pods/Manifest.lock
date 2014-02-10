@@ -1,13 +1,16 @@
 PODS:
   - OCMock (2.2.2)
   - TRVSMonitor (0.0.3)
+  - VeriJSON (0.1.1)
 
 DEPENDENCIES:
   - OCMock (~> 2.2)
   - TRVSMonitor (~> 0.0.3)
+  - VeriJSON (~> 0.1)
 
 SPEC CHECKSUMS:
   OCMock: ffba68873fd32cfd35d885bddad23bfa816da4a3
   TRVSMonitor: cc2b3d6f4cf18639464f6b8295f1b4722f4d4f14
+  VeriJSON: 789902e34f8a4b6764325a7c8bb108b518e03708
 
 COCOAPODS: 0.29.0

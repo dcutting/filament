@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Yellowbek Ltd. All rights reserved.
 
 #import <OCMock/OCMock.h>
+#import <VeriJSON/VeriJSON.h>
 
 #import "FLTAsyncXCTestCase.h"
 #import "FLTRepository.h"
@@ -20,18 +21,12 @@ void (^gitTaskTerminationHandler)(NSTask *);
 @property (nonatomic, strong) id mockTask;
 @property (nonatomic, strong) id mockFileReader;
 @property (nonatomic, strong) id mockJsonSerialiser;
+@property (nonatomic, strong) id mockVeriJSON;
+@property (nonatomic, strong) id dummyVeriJSONPattern;
 
 @property (nonatomic, copy) NSURL *gitURL;
 
 @end
-
-/* To do:
- 
- * Handle unexpected JSON.
- * Should this class also pull down git submodules?
- * Rework to accept git URL, branch name and clone path as constructor arguments. This will make handling of different sorts of repositories easier.
- 
- */
 
 @implementation FLTRepositoryTests
 
@@ -45,8 +40,11 @@ void (^gitTaskTerminationHandler)(NSTask *);
     
     self.mockFileReader = [OCMockObject niceMockForClass:[FLTFileReader class]];
     self.mockJsonSerialiser = [OCMockObject niceMockForClass:[FLTJSONSerialiser class]];
+    self.mockVeriJSON = [OCMockObject niceMockForClass:[VeriJSON class]];
     
-    self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory fileReader:self.mockFileReader jsonSerialiser:self.mockJsonSerialiser];
+    self.dummyVeriJSONPattern = @[];
+    
+    self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory fileReader:self.mockFileReader jsonSerialiser:self.mockJsonSerialiser veriJSON:self.mockVeriJSON veriJSONPattern:self.dummyVeriJSONPattern];
     
     self.gitURL = [NSURL URLWithString:GitURLString];
 
@@ -116,7 +114,10 @@ void (^gitTaskTerminationHandler)(NSTask *);
     NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
     [[[self.mockFileReader stub] andReturn:configurationData] dataWithContentsOfFile:configurationPath];
 
-    [[[self.mockJsonSerialiser stub] andReturn:[NSJSONSerialization JSONObjectWithData:configurationData options:0 error:NULL]]JSONObjectWithData:configurationData];
+    id json = [NSJSONSerialization JSONObjectWithData:configurationData options:0 error:NULL];
+    [[[self.mockJsonSerialiser stub] andReturn:json] JSONObjectWithData:configurationData];
+
+    [[[self.mockVeriJSON stub] andReturnValue:OCMOCK_VALUE(YES)] verifyJSON:json pattern:self.dummyVeriJSONPattern];
 
     [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
@@ -163,6 +164,30 @@ void (^gitTaskTerminationHandler)(NSTask *);
         
         XCTAssertNil(configuration, @"Expected nil configuration.");
         [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeCorruptConfiguration];
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+- (void)testCheckout_invalidConfigurationJSON_returnsInvalidConfigurationError {
+    
+    id dummyJSON = @{};
+    
+    [[[self.mockFileReader stub] andReturn:[NSData data]] dataWithContentsOfFile:[OCMArg any]];
+    [[[self.mockJsonSerialiser stub] andReturn:dummyJSON] JSONObjectWithData:[OCMArg any]];
+    
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+    
+    [[[self.mockVeriJSON stub] andReturnValue:OCMOCK_VALUE(NO)] verifyJSON:dummyJSON pattern:self.dummyVeriJSONPattern];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeInvalidConfiguration];
         
         [self signalCompletion];
     }];

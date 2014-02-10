@@ -12,12 +12,14 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
 @property (nonatomic, strong) NSTaskFactory *taskFactory;
 @property (nonatomic, strong) FLTFileReader *fileReader;
 @property (nonatomic, strong) FLTJSONSerialiser *jsonSerialiser;
+@property (nonatomic, strong) VeriJSON *veriJSON;
+@property (nonatomic, strong) id veriJSONPattern;
 
 @end
 
 @implementation FLTRepository
 
-- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory fileReader:(FLTFileReader *)fileReader jsonSerialiser:(FLTJSONSerialiser *)jsonSerialiser {
+- (instancetype)initWithGitPath:(NSString *)gitPath taskFactory:(NSTaskFactory *)taskFactory fileReader:(FLTFileReader *)fileReader jsonSerialiser:(FLTJSONSerialiser *)jsonSerialiser veriJSON:(VeriJSON *)veriJSON veriJSONPattern:(id)veriJSONPattern {
 
     self = [super init];
     if (self) {
@@ -25,6 +27,8 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
         _taskFactory = taskFactory;
         _fileReader = fileReader;
         _jsonSerialiser = jsonSerialiser;
+        _veriJSON = veriJSON;
+        _veriJSONPattern = veriJSONPattern;
     }
     return self;
 }
@@ -84,9 +88,18 @@ NSString *FLTRepositoryErrorDomain = @"FLTRepositoryErrorDomain";
     NSDictionary *jsonDictionary = [self.jsonSerialiser JSONObjectWithData:data];
     
     if (jsonDictionary) {
-        [self parseJSONDictionary:jsonDictionary clonePath:clonePath completionHandler:completionHandler];
+        [self verifyJSONDictionary:jsonDictionary clonePath:clonePath completionHandler:completionHandler];
     } else {
         [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeCorruptConfiguration];
+    }
+}
+
+- (void)verifyJSONDictionary:(NSDictionary *)jsonDictionary clonePath:(NSString *)clonePath completionHandler:(FLTRepositoryCompletionHandler)completionHandler {
+    
+    if ([self.veriJSON verifyJSON:jsonDictionary pattern:self.veriJSONPattern]) {
+        [self parseJSONDictionary:jsonDictionary clonePath:clonePath completionHandler:completionHandler];
+    } else {
+        [self callCompletionHandler:completionHandler errorCode:FLTRepositoryErrorCodeInvalidConfiguration];
     }
 }
 
