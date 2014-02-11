@@ -8,25 +8,28 @@
 
 @interface FLTStatusReporterTests : XCTestCase
 
+@property (nonatomic, strong) FLTStatusReporter *reporter;
+
 @end
 
 @implementation FLTStatusReporterTests
 
+- (void)setUp {
+    
+    self.reporter = [FLTStatusReporter new];
+}
+
 - (void)testNumberOfJobs_none_returns0 {
     
-    FLTStatusReporter *reporter = [FLTStatusReporter new];
-    
     NSUInteger expectedResult = 0;
-    NSUInteger actualResult = [reporter numberOfJobs];
+    NSUInteger actualResult = [self.reporter numberOfJobs];
     
     XCTAssertEqual(expectedResult, actualResult, @"Expected %lud but got %lud for number of jobs.", expectedResult, actualResult);
 }
 
 - (void)testJobAtIndex_none_throws {
     
-    FLTStatusReporter *reporter = [FLTStatusReporter new];
-    
-    XCTAssertThrows([reporter jobAtIndex:0], @"Expected exception when trying to access non-existent job.");
+    XCTAssertThrows([self.reporter jobAtIndex:0], @"Expected exception when trying to access non-existent job.");
 }
 
 @end
