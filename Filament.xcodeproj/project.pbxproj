@@ -29,6 +29,7 @@
 		C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C85E8E42189479A700C4C48F /* NSTaskFactory.m */; };
 		C86AD1EC18A8D582009F4459 /* FLTStatusReporterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C86AD1EB18A8D582009F4459 /* FLTStatusReporterTests.m */; };
 		C86AD1EF18A8D5A2009F4459 /* FLTStatusReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = C86AD1EE18A8D5A2009F4459 /* FLTStatusReporter.m */; };
+		C891B9E118AA264400C41A7C /* FLTJob.m in Sources */ = {isa = PBXBuildFile; fileRef = C891B9E018AA264400C41A7C /* FLTJob.m */; };
 		C89C453B18A8612F00028FE5 /* FilamentConfigurationPattern.json in Resources */ = {isa = PBXBuildFile; fileRef = C89C453A18A8612F00028FE5 /* FilamentConfigurationPattern.json */; };
 		C8AB020418A4E00A00C392D4 /* FLTFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = C8AB020318A4E00A00C392D4 /* FLTFileReader.m */; };
 		C8B15C7518972714006CDE02 /* FLTAsyncXCTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C8B15C7418972714006CDE02 /* FLTAsyncXCTestCase.m */; };
@@ -94,6 +95,8 @@
 		C86AD1EB18A8D582009F4459 /* FLTStatusReporterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTStatusReporterTests.m; sourceTree = "<group>"; };
 		C86AD1ED18A8D5A2009F4459 /* FLTStatusReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTStatusReporter.h; sourceTree = "<group>"; };
 		C86AD1EE18A8D5A2009F4459 /* FLTStatusReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTStatusReporter.m; sourceTree = "<group>"; };
+		C891B9DF18AA264400C41A7C /* FLTJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTJob.h; sourceTree = "<group>"; };
+		C891B9E018AA264400C41A7C /* FLTJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTJob.m; sourceTree = "<group>"; };
 		C89C453A18A8612F00028FE5 /* FilamentConfigurationPattern.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FilamentConfigurationPattern.json; sourceTree = "<group>"; };
 		C8AB020218A4E00A00C392D4 /* FLTFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTFileReader.h; sourceTree = "<group>"; };
 		C8AB020318A4E00A00C392D4 /* FLTFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTFileReader.m; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				C85E8E371894411400C4C48F /* FLTIntegrator.m */,
 				C85E8E391894419200C4C48F /* FLTIntegratorConfiguration.h */,
 				C85E8E3A1894419200C4C48F /* FLTIntegratorConfiguration.m */,
+				C891B9DF18AA264400C41A7C /* FLTJob.h */,
+				C891B9E018AA264400C41A7C /* FLTJob.m */,
 				C8DE6FCF18A5A91E001E22A2 /* FLTJSONSerialiser.h */,
 				C8DE6FD018A5A91E001E22A2 /* FLTJSONSerialiser.m */,
 				C85E8E331894406C00C4C48F /* FLTRepository.h */,
@@ -443,6 +448,7 @@
 				C85E8E3E1894425D00C4C48F /* FLTIntegrationReport.m in Sources */,
 				C85E8E43189479A700C4C48F /* NSTaskFactory.m in Sources */,
 				C8FF3D0318951A3700DF9ABE /* FLTIntegrationReportGenerator.m in Sources */,
+				C891B9E118AA264400C41A7C /* FLTJob.m in Sources */,
 				C85E8E0D189435CA00C4C48F /* FLTAppDelegate.m in Sources */,
 				C86AD1EF18A8D5A2009F4459 /* FLTStatusReporter.m in Sources */,
 			);

@@ -2,9 +2,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FLTJob.h"
+
 @interface FLTStatusReporter : NSObject
 
 - (NSUInteger)numberOfJobs;
-- (id)jobAtIndex:(NSUInteger)index;
+- (FLTJob *)jobAtIndex:(NSUInteger)index;
+- (void)addJob:(FLTJob *)job;
 
 @end
