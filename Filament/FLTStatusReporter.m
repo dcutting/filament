@@ -9,4 +9,11 @@
     return 0;
 }
 
+- (id)jobAtIndex:(NSUInteger)index {
+    
+    [NSException raise:NSInvalidArgumentException format:@"No job at index %ld.", index];
+    
+    return nil;
+}
+
 @end

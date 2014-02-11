@@ -22,4 +22,11 @@
     XCTAssertEqual(expectedResult, actualResult, @"Expected %lud but got %lud for number of jobs.", expectedResult, actualResult);
 }
 
+- (void)testJobAtIndex_none_throws {
+    
+    FLTStatusReporter *reporter = [FLTStatusReporter new];
+    
+    XCTAssertThrows([reporter jobAtIndex:0], @"Expected exception when trying to access non-existent job.");
+}
+
 @end

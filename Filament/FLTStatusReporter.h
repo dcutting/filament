@@ -5,5 +5,6 @@
 @interface FLTStatusReporter : NSObject
 
 - (NSUInteger)numberOfJobs;
+- (id)jobAtIndex:(NSUInteger)index;
 
 @end
