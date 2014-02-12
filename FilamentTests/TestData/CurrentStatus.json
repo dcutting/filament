@@ -1,0 +1,31 @@
+{
+    "jobs": [
+        {
+            "lastBuild": "20140212T1821Z",
+            "name": "master",
+            "status": {
+                "code": "failed",
+                "reason": "build",
+            }
+            "steps": {
+                "analyse": {
+                    "warnings": 4
+                },
+                "build": {
+                    "errors": 3,
+                    "warnings": 5
+                },
+                "coverage": {
+                    "percentLines": 84
+                },
+                "style": {
+                    "warnings": 2
+                },
+                "test": {
+                    "failed": 1,
+                    "total": 180
+                }
+            }
+        }
+    ]
+}
