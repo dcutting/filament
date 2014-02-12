@@ -47,4 +47,12 @@
     XCTAssertEqual(dummyJob, actualJob, @"Expected '%@' but got '%@' for job at index 0.", dummyJob, actualJob);
 }
 
+- (void)testJobAtIndex_beyondNumberOfJobs_throws {
+    
+    id dummyJob = [OCMockObject niceMockForClass:[FLTJob class]];
+    [self.reporter addJob:dummyJob];
+
+    XCTAssertThrows([self.reporter jobAtIndex:1], @"Expected exception when trying to access non-existent job.");
+}
+
 @end

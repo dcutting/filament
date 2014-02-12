@@ -26,9 +26,6 @@
 
 - (FLTJob *)jobAtIndex:(NSUInteger)index {
     
-    if ([self numberOfJobs] == 0) {
-        [NSException raise:NSInvalidArgumentException format:@"No job at index %ld.", index];
-    }
     return self.jobs[index];
 }
 
