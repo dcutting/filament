@@ -84,3 +84,20 @@ To serve results
 	Read summary of latest build for each job
 	For jobs in progress
 	Serve as single HTML page
+
+Possible failure reasons:
+
+* invalid URL
+* git tool failure
+* cannot clone repository/no such branch
+* missing configuration
+* corrupt configuration
+* invalid configuration
+* xctool failure
+* build
+* analyse
+* test
+* gcovr tool failure
+* low code coverage
+* oclint tool failure
+* bad style
