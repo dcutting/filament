@@ -14,6 +14,7 @@
     
     self = [super init];
     if (self) {
+        
         _jobs = [NSMutableArray new];
     }
     return self;
