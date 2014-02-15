@@ -5,7 +5,7 @@
 
 @interface FLTMenuBarItem ()
 
-@property (nonatomic, weak) IBOutlet NSMenu *theMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *menu;
 
 @end
 
@@ -21,18 +21,11 @@
     [self.statusItem setEnabled:YES];
     [self.statusItem setToolTip:@"Filament CI"];
     
-    [self.statusItem setAction:@selector(menuBarItemPressed:)];
-    [self.statusItem setTarget:self];
-    
     [self configureMenu];
 }
 
-- (void)menuBarItemPressed:(id)sender {
-    NSLog(@"menuBarItemPressed: %@", sender);
-}
-
 - (void)configureMenu {
-    [self.statusItem setMenu:self.theMenu];
+    [self.statusItem setMenu:self.menu];
 }
 
 
