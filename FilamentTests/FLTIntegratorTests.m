@@ -18,6 +18,7 @@ static NSString *Scheme = @"MyScheme";
 @property (nonatomic, strong) id mockTaskFactory;
 @property (nonatomic, strong) id mockTask;
 @property (nonatomic, strong) id mockIntegrationReportGenerator;
+@property (nonatomic, strong) id mockFileReader;
 @property (nonatomic, strong) FLTIntegratorConfiguration *dummyConfiguration;
 
 @end
@@ -34,7 +35,9 @@ static NSString *Scheme = @"MyScheme";
     
     self.mockIntegrationReportGenerator = [OCMockObject niceMockForClass:[FLTIntegrationReportGenerator class]];
     
-    self.integrator = [[FLTIntegrator alloc] initWithXctoolPath:XctoolPath taskFactory:self.mockTaskFactory integrationReportGenerator:self.mockIntegrationReportGenerator];
+    self.mockFileReader = [OCMockObject niceMockForClass:[FLTFileReader class]];
+    
+    self.integrator = [[FLTIntegrator alloc] initWithXctoolPath:XctoolPath taskFactory:self.mockTaskFactory fileReader:self.mockFileReader integrationReportGenerator:self.mockIntegrationReportGenerator];
     
     self.dummyConfiguration = [FLTIntegratorConfiguration new];
     self.dummyConfiguration.resultsPath = ResultsPath;
@@ -115,8 +118,8 @@ static NSString *Scheme = @"MyScheme";
     [self.integrator integrateConfiguration:self.dummyConfiguration completionHandler:nil];
 
     NSString *buildOutput = @"builded";
-    id mockString = [OCMockObject niceMockForClass:[NSString class]];
-    [[[[mockString stub] andReturn:buildOutput] classMethod] stringWithContentsOfFile:ResultsPath encoding:NSUTF8StringEncoding error:(NSError __autoreleasing **)[OCMArg anyPointer]];
+    
+    [[[self.mockFileReader stub] andReturn:buildOutput] stringWithContentsOfFile:[OCMArg any]];
 
     [[self.mockIntegrationReportGenerator expect] reportWithBuildOutput:buildOutput];
     

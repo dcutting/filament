@@ -58,7 +58,7 @@ static NSString *ToPath = @"/path/to/clone";
 
     [[self.mockIntegrator expect] integrateConfiguration:dummyConfiguration completionHandler:[OCMArg any]];
     
-    completionHandler(dummyConfiguration);
+    completionHandler(dummyConfiguration, nil);
     
     [self.mockIntegrator verify];
 }
@@ -88,7 +88,7 @@ static NSString *ToPath = @"/path/to/clone";
     
     FLTIntegratorConfiguration *dummyConfiguration = [FLTIntegratorConfiguration new];
     
-    repositoryCompletionHandler(dummyConfiguration);
+    repositoryCompletionHandler(dummyConfiguration, nil);
     integrationCompletionHandler(dummyReport);
 }
 

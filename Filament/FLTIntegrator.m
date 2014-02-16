@@ -6,18 +6,20 @@
 
 @property (nonatomic, copy) NSString *xctoolPath;
 @property (nonatomic, strong) NSTaskFactory *taskFactory;
+@property (nonatomic, strong) FLTFileReader *fileReader;
 @property (nonatomic, strong) FLTIntegrationReportGenerator *integrationReportGenerator;
 
 @end
 
 @implementation FLTIntegrator
 
-- (instancetype)initWithXctoolPath:(NSString *)xctoolPath taskFactory:(NSTaskFactory *)taskFactory integrationReportGenerator:(FLTIntegrationReportGenerator *)integrationReportGenerator {
+- (instancetype)initWithXctoolPath:(NSString *)xctoolPath taskFactory:(NSTaskFactory *)taskFactory fileReader:(FLTFileReader *)fileReader integrationReportGenerator:(FLTIntegrationReportGenerator *)integrationReportGenerator {
 
     self = [super init];
     if (self) {
         _xctoolPath = xctoolPath;
         _taskFactory = taskFactory;
+        _fileReader = fileReader;
         _integrationReportGenerator = integrationReportGenerator;
     }
     return self;
@@ -54,7 +56,7 @@
 
 - (void)processBuildResultsAtPath:(NSString *)path completionHandler:(FLTIntegratorCompletionHandler)completionHandler {
     
-    NSString *output = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    NSString *output = [self.fileReader stringWithContentsOfFile:path];
     
     FLTIntegrationReport *report = [self.integrationReportGenerator reportWithBuildOutput:output];
     

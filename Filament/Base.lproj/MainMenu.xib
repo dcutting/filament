@@ -16,7 +16,6 @@
         <customObject id="Jo7-e0-wgd" customClass="FLTMenuBarItem">
             <connections>
                 <outlet property="menu" destination="SPd-H5-z9l" id="nut-C2-IhJ"/>
-                <outlet property="theMenu" destination="SPd-H5-z9l" id="ScL-db-wCD"/>
             </connections>
         </customObject>
         <menu id="SPd-H5-z9l">

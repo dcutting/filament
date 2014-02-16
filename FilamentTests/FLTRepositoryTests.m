@@ -1,6 +1,7 @@
 //  Copyright (c) 2014 Yellowbek Ltd. All rights reserved.
 
 #import <OCMock/OCMock.h>
+#import <VeriJSON/VeriJSON.h>
 
 #import "FLTAsyncXCTestCase.h"
 #import "FLTRepository.h"
@@ -8,8 +9,9 @@
 static NSString *GitPath = @"/path/to/git";
 static NSString *GitURLString = @"/path/to/git/repo";
 static NSString *ClonePath = @"/path/to/cloned/repo";
-
 static NSString *BranchName = @"mybranch";
+
+void (^gitTaskTerminationHandler)(NSTask *);
 
 @interface FLTRepositoryTests : FLTAsyncXCTestCase
 
@@ -17,6 +19,10 @@ static NSString *BranchName = @"mybranch";
 
 @property (nonatomic, strong) id mockTaskFactory;
 @property (nonatomic, strong) id mockTask;
+@property (nonatomic, strong) id mockFileReader;
+@property (nonatomic, strong) id mockJsonSerialiser;
+@property (nonatomic, strong) id mockVeriJSON;
+@property (nonatomic, strong) id dummyVeriJSONPattern;
 
 @property (nonatomic, copy) NSURL *gitURL;
 
@@ -32,37 +38,41 @@ static NSString *BranchName = @"mybranch";
     self.mockTask = [OCMockObject niceMockForClass:[NSTask class]];
     [[[self.mockTaskFactory stub] andReturn:self.mockTask] task];
     
-    self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory];
+    self.mockFileReader = [OCMockObject niceMockForClass:[FLTFileReader class]];
+    self.mockJsonSerialiser = [OCMockObject niceMockForClass:[FLTJSONSerialiser class]];
+    self.mockVeriJSON = [OCMockObject niceMockForClass:[VeriJSON class]];
+    
+    self.dummyVeriJSONPattern = @[];
+    
+    self.repository = [[FLTRepository alloc] initWithGitPath:GitPath taskFactory:self.mockTaskFactory fileReader:self.mockFileReader jsonSerialiser:self.mockJsonSerialiser veriJSON:self.mockVeriJSON veriJSONPattern:self.dummyVeriJSONPattern];
     
     self.gitURL = [NSURL URLWithString:GitURLString];
-}
 
-- (void)testCheckout_doesComplete {
-    
-    void (^terminationHandler)(NSTask *);
-    [self captureTerminationHandler:&terminationHandler];
-    
-    NSData *configurationData = [self sampleConfigurationData];
-    id mockData = [OCMockObject niceMockForClass:[NSData class]];
-    [[[[mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:[OCMArg any]];
-
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
-        
-        [self signalCompletion];
-    }];
-    
-    terminationHandler(self.mockTask);
-    
-    [self assertCompletion];
+    [self captureTerminationHandler:&gitTaskTerminationHandler];
 }
 
 - (void)captureTerminationHandler:(void (^ __strong *)(NSTask *))terminationHandler {
-
+    
     [[[self.mockTask stub] andDo:^(NSInvocation *invocation) {
         void (^block)(NSTask *);
         [invocation getArgument:&block atIndex:2];
         *terminationHandler = block;
     }] setTerminationHandler:[OCMArg any]];
+}
+
+- (void)testCheckout_doesComplete {
+    
+    NSData *configurationData = [self sampleConfigurationData];
+    [[[self.mockFileReader stub] andReturn:configurationData] dataWithContentsOfFile:[OCMArg any]];
+
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+    
+    [self assertCompletion];
 }
 
 - (void)testCheckout_launchesGitCloneTask {
@@ -76,6 +86,21 @@ static NSString *BranchName = @"mybranch";
     [self.mockTask verify];
 }
 
+- (void)testCheckout_launchException_returnsToolFailureError {
+    
+    [[[self.mockTask stub] andThrow:[NSException exceptionWithName:NSInvalidArgumentException reason:nil userInfo:nil]] launch];
+        
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeToolFailure];
+        
+        [self signalCompletion];
+    }];
+    
+    [self assertCompletion];
+}
+
 - (void)testCheckout_checkedOutBranch_returnsParsedConfigurationInCompletionHandler {
 
     NSString *resultsPath = [NSString pathWithComponents:@[ ClonePath, @"build.json" ]];
@@ -83,16 +108,18 @@ static NSString *BranchName = @"mybranch";
     NSString *workspace = @"MyWorkspace.xcworkspace";
     NSString *scheme = @"MyScheme";
     
-    NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
-    
-    void (^terminationHandler)(NSTask *);
-    [self captureTerminationHandler:&terminationHandler];
-    
-    NSData *configurationData = [self sampleConfigurationData];
-    id mockData = [OCMockObject niceMockForClass:[NSData class]];
-    [[[[mockData stub] andReturn:configurationData] classMethod] dataWithContentsOfFile:configurationPath];
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
 
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+    NSData *configurationData = [self sampleConfigurationData];
+    NSString *configurationPath = [NSString pathWithComponents:@[ ClonePath, @".filament" ]];
+    [[[self.mockFileReader stub] andReturn:configurationData] dataWithContentsOfFile:configurationPath];
+
+    id json = [NSJSONSerialization JSONObjectWithData:configurationData options:0 error:NULL];
+    [[[self.mockJsonSerialiser stub] andReturn:json] JSONObjectWithData:configurationData];
+
+    [[[self.mockVeriJSON stub] andReturnValue:OCMOCK_VALUE(YES)] verifyJSON:json pattern:self.dummyVeriJSONPattern];
+
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertEqualObjects(resultsPath, configuration.resultsPath, @"Expected '%@' but got '%@' for results path.", resultsPath, configuration.resultsPath);
         XCTAssertEqualObjects(rootPath, configuration.rootPath, @"Expected '%@' but got '%@' for root path.", rootPath, configuration.rootPath);
@@ -102,51 +129,110 @@ static NSString *BranchName = @"mybranch";
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
-    
-    [self.mockTask verify];
+    gitTaskTerminationHandler(self.mockTask);
     
     [self assertCompletion];
 }
 
-- (void)testCheckout_missingConfiguration_returnsNilConfigurationInCompletionHandler {
+- (void)testCheckout_missingConfiguration_returnsMissingConfigurationError {
     
-    id mockData = [OCMockObject niceMockForClass:[NSData class]];
-    [[[[mockData stub] andReturn:nil] classMethod] dataWithContentsOfFile:[OCMArg any]];
+    [[[self.mockFileReader stub] andReturn:nil] dataWithContentsOfFile:[OCMArg any]];
     
-    void (^terminationHandler)(NSTask *);
-    [self captureTerminationHandler:&terminationHandler];
-    
-    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
         
         XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeMissingConfiguration];
         
         [self signalCompletion];
     }];
     
-    terminationHandler(self.mockTask);
+    gitTaskTerminationHandler(self.mockTask);
     
     [self assertCompletion];
 }
 
-//- (void)testCheckout_failed_returnsNilConfigurationInCompletionHandler {
-//    
-//    void (^terminationHandler)(NSTask *);
-//    [self captureTerminationHandler:&terminationHandler];
-//
-//    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
-//    
-//    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration) {
-//        
-//        XCTAssertNil(configuration, @"Expected nil configuration but got '%@'.", configuration);
-//        
-//        [self signalCompletion];
-//    }];
-//    
-//    terminationHandler(self.mockTask);
-//
-//    [self assertCompletion];
-//}
+- (void)testCheckout_corruptConfigurationJSON_returnsCorruptConfigurationError {
+    
+    [[[self.mockFileReader stub] andReturn:[NSData data]] dataWithContentsOfFile:[OCMArg any]];
+    [[[self.mockJsonSerialiser stub] andReturn:nil] JSONObjectWithData:[OCMArg any]];
+    
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeCorruptConfiguration];
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+- (void)testCheckout_invalidConfigurationJSON_returnsInvalidConfigurationError {
+    
+    id dummyJSON = @{};
+    
+    [[[self.mockFileReader stub] andReturn:[NSData data]] dataWithContentsOfFile:[OCMArg any]];
+    [[[self.mockJsonSerialiser stub] andReturn:dummyJSON] JSONObjectWithData:[OCMArg any]];
+    
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+    
+    [[[self.mockVeriJSON stub] andReturnValue:OCMOCK_VALUE(NO)] verifyJSON:dummyJSON pattern:self.dummyVeriJSONPattern];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeInvalidConfiguration];
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+- (void)testCheckout_uncaughtSignalTerminationReason_returnsToolFailureError {
+    
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonUncaughtSignal)] terminationReason];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeToolFailure];
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+    
+    [self assertCompletion];
+}
+
+- (void)testCheckout_errorTerminationStatus_returnsBadExitCodeError {
+    
+    [[[self.mockFileReader stub] andReturn:[NSData data]] dataWithContentsOfFile:[OCMArg any]];
+
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(NSTaskTerminationReasonExit)] terminationReason];
+    [[[self.mockTask stub] andReturnValue:OCMOCK_VALUE(128)] terminationStatus];
+    
+    [self.repository checkoutGitURL:self.gitURL branchName:BranchName toPath:ClonePath completionHandler:^(FLTIntegratorConfiguration *configuration, NSError *error) {
+        
+        XCTAssertNil(configuration, @"Expected nil configuration.");
+        [self assertError:error hasDomain:FLTRepositoryErrorDomain code:FLTRepositoryErrorCodeBadExitCode];
+        
+        [self signalCompletion];
+    }];
+    
+    gitTaskTerminationHandler(self.mockTask);
+
+    [self assertCompletion];
+}
 
 - (NSData *)sampleConfigurationData {
     
@@ -155,6 +241,12 @@ static NSString *BranchName = @"mybranch";
     NSString *path = [bundle pathForResource:@"ConfigurationFile.json" ofType:nil];
     
     return [NSData dataWithContentsOfFile:path];
+}
+
+- (void)assertError:(NSError *)error hasDomain:(NSString *)domain code:(NSInteger)code {
+    
+    XCTAssertEqualObjects(domain, error.domain, @"Expected error domain '%@' but got '%@'.", domain, error.domain);
+    XCTAssertEqual(code, error.code, @"Expected error code %ld but got %ld.", code, error.code);
 }
 
 @end
