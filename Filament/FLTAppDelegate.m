@@ -23,8 +23,6 @@
     }];
 }
 
-#pragma mark -
-
 - (FLTIntegrator *)newIntegrator {
     
     NSString *xctoolPath = @"~/Code/xctool/xctool.sh";
